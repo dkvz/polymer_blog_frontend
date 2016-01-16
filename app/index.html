@@ -91,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
+          <!--<paper-icon-button icon="refresh"></paper-icon-button>-->
           <paper-icon-button icon="search"></paper-icon-button>
 
           <!-- Application name -->
@@ -99,11 +99,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="app-name">Blog des gens compliqués</div>
           </div>
 
-          <!-- Application sub title -->
-          <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">Serrage de fesses</div>
+          <div class="bottom bottom-container horizontal layout">
+            <div class="bottom-title paper-font-subhead" id="subtit">Ma mère en short</div>
           </div>
-
+          
+          <div class="bottom bottom-container horizontal end-justified flex layout">
+            <paper-toolbar>
+              <!-- Menu that only shows if the view is narrow: -->
+              <paper-menu-button id="topNavNarrow">
+                <paper-icon-button icon="arrow-drop-down" class="dropdown-trigger"></paper-icon-button>
+                <paper-menu class="dropdown-content">
+                    <a href="#">
+                      <span>Accueil</span>
+                    </a>
+                    <a href="http://www.google.be">
+                      <span>C'est quoi ce blog?</span>
+                    </a>
+                </paper-menu>
+              </paper-menu-button>
+              <!-- End of Menu that only shows if the view is narrow. -->
+              <div id="topNav">
+              <iron-icon icon="more-vert"></iron-icon>
+              <paper-button raised>Accueil</paper-button>
+              <paper-button raised>C'est quoi ce blog?</paper-button>
+              </div>
+            </paper-toolbar>
+          </div>
+          
         </paper-toolbar>
 
         <!-- Main Content -->
