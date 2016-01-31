@@ -92,6 +92,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Toolbar icons -->
           <!--<paper-icon-button icon="refresh"></paper-icon-button>-->
+          <!-- Menu that only shows if the view is narrow: -->
+          <!-- But then it also shows up on top of the search button... -->
+          <paper-menu-button id="topNavNarrow">
+            <paper-icon-button icon="arrow-drop-down" class="dropdown-trigger"></paper-icon-button>
+            <paper-menu class="dropdown-content">
+                <a href="#">
+                  <span>Accueil</span>
+                </a>
+                <a href="http://www.google.be">
+                  <span>C'est quoi ce blog?</span>
+                </a>
+            </paper-menu>
+          </paper-menu-button>
+          <!-- End of Menu that only shows if the view is narrow. -->
           <paper-icon-button icon="search"></paper-icon-button>
 
           <!-- Application name -->
@@ -104,19 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           
           <div class="bottom bottom-container horizontal end-justified flex layout">
-            <!-- Menu that only shows if the view is narrow: -->
-            <paper-menu-button id="topNavNarrow">
-              <paper-icon-button icon="arrow-drop-down" class="dropdown-trigger"></paper-icon-button>
-              <paper-menu class="dropdown-content">
-                  <a href="#">
-                    <span>Accueil</span>
-                  </a>
-                  <a href="http://www.google.be">
-                    <span>C'est quoi ce blog?</span>
-                  </a>
-              </paper-menu>
-            </paper-menu-button>
-            <!-- End of Menu that only shows if the view is narrow. -->
+            <!-- Moving my narrow only menu (was here before -->
             <div id="topNav">
               <iron-icon icon="more-vert"></iron-icon>
               <paper-button raised>Accueil</paper-button>
