@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
+
+<dom-module id="article-card">
+  <template>
+    <style>
+      .mainCard {
+        padding: 0;
+        background: var(--article-card-background, white);
+        overflow: auto;
+      }
+      .top {
+        padding: var(--article-card-padding, 14px);
+      }
+      .left {float: left}
+      .right {float: right}
+      .bottom {
+        clear: both;
+        text-align: left;
+        border-top: 1px solid #eee;
+        padding: var(--article-card-padding, 14px);
+        overflow: auto;
+      }
+      div.date {border-bottom: solid 4px black; padding-bottom: 10px}
+    </style>
+    
+    <paper-material elevation="2" class="mainCard">
+      <div class="top">
+        <div class="left">
+          <h2>{{title}}</h2>
+          <div class="date">Publié le: {{publication-date}}</div>
+          <div class="content">
+            <content></content>
+          </div>
+        </div>
+        <template is="dom-if" if="{{image-src}}">
+          <paper-card image="{{image-src}}" class="right">
+            {{image-legend}}
+          </paper-card>
+        </template>
+      </div>
+      <div class="bottom">
+        <div class="left">
+          <paper-button raised>
+            <iron-icon icon="open-in-new"></iron-icon>
+            Lire la suite...
+          </paper-button>
+        </div>
+        <div class="right">
+          <paper-button raised>
+            <iron-icon icon="mail"></iron-icon>
+            <template is="dom-if" if="{{comment-count}}><paper-badge label="{{comment-count}}"></paper-badge></template>
+            Commentaires
+          </paper-button>
+        </div>
+      </div>
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'article-card',
+
+      properties: {
+        'article-id': {
+          type: Number,
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

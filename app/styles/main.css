@@ -18,4 +18,8 @@ body {
   font-family: 'Noto Sans', sans-serif;
   color: #353535;
   margin: 0px;
+  background-image: url('../images/patgpibgray.jpg');
+  background-repeat: repeat;
+  background-position: top left;
+  background-attachment: fixed;
 }

@@ -132,9 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-              <paper-material elevation="2">
-                <blog-article></blog-article>
-              </paper-material>
+              <article-card title="Titre de test" publication-date="19/02/2016" image-src="images/patgpibgray.jpg" image-legend="This is the image legend">
+                Contenu du résumé.<br />
+                Avec une second ligne.
+              </article-card>
+              
             </section>
 
           </iron-pages>
