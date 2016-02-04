@@ -43,15 +43,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="left">
           <h2>{{title}}</h2>
           <div class="date">Publié le: {{publication-date}}</div>
+          <template is="dom-if" if="{{image-src}}">
+            <paper-card image="{{image-src}}" class="right">
+              {{image-legend}}
+            </paper-card>
+          </template>
           <div class="content">
             <content></content>
           </div>
         </div>
-        <template is="dom-if" if="{{image-src}}">
-          <paper-card image="{{image-src}}" class="right">
-            {{image-legend}}
-          </paper-card>
-        </template>
       </div>
       <div class="bottom">
         <div class="left">
