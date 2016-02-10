@@ -10,7 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
@@ -28,6 +27,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .left {float: left}
       .right {float: right}
+      .content {
+        clear: both;
+      }
       .bottom {
         clear: both;
         text-align: left;
@@ -36,21 +38,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         overflow: auto;
       }
       div.date {border-bottom: solid 4px black; padding-bottom: 10px}
+      .topImg {
+        border-radius: 50%;
+        height: 110px;
+        box-shadow: 4px 2px 2px #888888;
+      }
     </style>
     
     <paper-material elevation="2" class="mainCard">
       <div class="top">
         <div class="left">
           <h2>{{title}}</h2>
-          <div class="date">Publié le: {{publication-date}}</div>
-          <template is="dom-if" if="{{image-src}}">
-            <paper-card image="{{image-src}}" class="right">
-              {{image-legend}}
-            </paper-card>
-          </template>
-          <div class="content">
+          <div class="date">Publié le: {{publicationDate}}</div>
+        </div>
+        <template is="dom-if" if="{{imageSrc}}">
+          <img src="{{imageSrc}}" class="right topImg" />
+        </template>
+        <div class="content">
             <content></content>
-          </div>
         </div>
       </div>
       <div class="bottom">
@@ -63,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="right">
           <paper-button raised>
             <iron-icon icon="mail"></iron-icon>
-            <template is="dom-if" if="{{comment-count}}"><paper-badge label="{{comment-count}}"></paper-badge></template>
+            <template is="dom-if" if="{{commentCount}}"><paper-badge label="{{commentCount}}"></paper-badge></template>
             Commentaires
           </paper-button>
         </div>
@@ -78,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'article-card',
 
       properties: {
-        'article-id': {
+        'articleId': {
           type: Number,
           notify: true
         }
