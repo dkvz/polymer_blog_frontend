@@ -129,10 +129,10 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             <section data-route="home">
             
               <iron-ajax
+                id="articleSelector"
                 auto
-                url="http://localhost:9000"
-                handle-as="json"
-                last-response="{{articles}}">
+                url="http://localhost:9000/articles-starting-from/0"
+                handle-as="json">
               </iron-ajax>
               
               <template is="dom-repeat" items="{{articles}}">

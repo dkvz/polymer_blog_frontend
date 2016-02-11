@@ -17,10 +17,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // Sets app default base URL
   app.baseUrl = '/';
+  // Set API URL:
+  app.apiBaseUrl = 'http://localhost:9000/';
+  // The array holding all the articles:
+  app.articles = [];
+  // Boolean that tells if articles are currently loading:
+  app.syncing = false;
+  
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
     // set app.baseURL to '/your-pathname/' if running from folder in production
     // app.baseUrl = '/polymer-starter-kit/';
+  }
+  
+  function loadArticles(start, replace) {
+    if (app.syncing) {
+      // Still syncinc, not doing shit.
+      return;
+    }
+    console.log('Loading articles starting from ' + start + '...');
+    //var ajax = document.querySelector('#articleSelector');
+    var ajax = app.$.articleSelector;
+    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start;
+    app.syncing = true;
+    if (replace) {
+      ajax.addEventListener('response', handleArticleResponseReplace);
+    } else {
+      ajax.addEventListener('response', handleArticleResponseAdd);
+    }
+  }
+  
+  function handleArticleResponseReplace(e) {
+    app.articles = e.detail.response;
+    app.syncing = false;
+  }
+  
+  function handleArticleResponseAdd(e) {
+    for (var i = 0; i < e.detail.response.length; i++) {
+      app.articles.push(e.detail.response[i]);
+    }
+    app.syncing = false;
   }
 
   app.displayInstalledToast = function() {
@@ -33,7 +69,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+    //console.log('Our app is ready to rock!');
+    // Load articles starting from the first one.
+    console.log('Loading articles...');
+    loadArticles(0, true);
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
