@@ -4,7 +4,7 @@
 I think this code is supposed to be BSD licenced. I'm too dumb to understand this licensing schmick.
 -->
 
-<html lang="">
+<html lang="" id="html">
 
 <head>
   <meta charset="utf-8">
@@ -142,16 +142,20 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                 </div>
               </template>
               
-              <template is="dom-repeat" items="{{articles}}">
-                <article-card title="{{item.title}}" 
-                  article-id="{{item.id}}"
-                  image-src="{{item.thumbImage}}"
-                  comment-count="{{item.commentsCount}}"
-                  publication-date="{{item.date}}">
-                  {{item.summary}}
-                </article-card>
-                <br />
-              </template>
+              <iron-list items="[[articles]]" as="item" scroll-target="html" id="articleList">
+                <template>
+                  <div class="item">
+                    <article-card title="[[item.title]]" 
+                      article-id="[[item.id]]"
+                      image-src="[[item.thumbImage]]"
+                      comment-count="[[item.commentsCount]]"
+                      publication-date="[[item.date]]">
+                      [[item.summary]]
+                    </article-card>
+                    <br />
+                  </div>
+                </template>
+              </iron-list>
               
             </section>
 

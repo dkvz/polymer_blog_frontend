@@ -32,6 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   function handleArticleResponseReplace(e) {
     app.articles = e.detail.response;
+    app.$.articleList.fire('iron-resize');
     app.syncing = false;
   }
   
@@ -39,6 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     for (var i = 0; i < e.detail.response.length; i++) {
       app.articles.push(e.detail.response[i]);
     }
+    app.$.articleList.fire('iron-resize');
     app.syncing = false;
   }
   
