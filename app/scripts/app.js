@@ -30,6 +30,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // app.baseUrl = '/polymer-starter-kit/';
   }
   
+  function handleArticleResponseReplace(e) {
+    app.articles = e.detail.response;
+    app.syncing = false;
+  }
+  
+  function handleArticleResponseAdd(e) {
+    for (var i = 0; i < e.detail.response.length; i++) {
+      app.articles.push(e.detail.response[i]);
+    }
+    app.syncing = false;
+  }
+  
   function loadArticles(start, replace) {
     if (app.syncing) {
       // Still syncinc, not doing shit.
@@ -45,18 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     } else {
       ajax.addEventListener('response', handleArticleResponseAdd);
     }
-  }
-  
-  function handleArticleResponseReplace(e) {
-    app.articles = e.detail.response;
-    app.syncing = false;
-  }
-  
-  function handleArticleResponseAdd(e) {
-    for (var i = 0; i < e.detail.response.length; i++) {
-      app.articles.push(e.detail.response[i]);
-    }
-    app.syncing = false;
   }
 
   app.displayInstalledToast = function() {

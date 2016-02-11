@@ -131,9 +131,16 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               <iron-ajax
                 id="articleSelector"
                 auto
-                url="http://localhost:9000/articles-starting-from/0"
                 handle-as="json">
               </iron-ajax>
+              
+              <template is="dom-if" if="{{syncing}}">
+                <div id="refresh" class="fit layout vertical center-center">
+                  <div id="refresh-spinner-container" class="layout vertical center-center shrink">
+                    <paper-spinner active></paper-spinner>
+                  </div>
+                </div>
+              </template>
               
               <template is="dom-repeat" items="{{articles}}">
                 <article-card title="{{item.title}}" 
