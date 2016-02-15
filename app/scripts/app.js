@@ -14,7 +14,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-
+  
+  // Max number of articles to load:
+  app.maxArticles = '10';
   // Sets app default base URL
   app.baseUrl = '/';
   // Set API URL:
@@ -23,6 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.articles = [];
   // Boolean that tells if articles are currently loading:
   app.syncing = false;
+  // hack I used to prevent firing iron-scroll-threshold:
+  app.firstLoad = true;
   
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
@@ -32,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   function handleArticleResponseReplace(e) {
     app.articles = e.detail.response;
-    app.$.articleList.fire('iron-resize');
+    //app.$.articleList.fire('iron-resize');
     app.syncing = false;
   }
   
@@ -40,7 +44,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     for (var i = 0; i < e.detail.response.length; i++) {
       app.articles.push(e.detail.response[i]);
     }
-    app.$.articleList.fire('iron-resize');
+    //app.$.articleList.fire('iron-resize');
+    // This line is necessary so that the scroll event can trigger again:
+    app.$.scrollThres.clearTriggers();
     app.syncing = false;
   }
   
@@ -52,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Loading articles starting from ' + start + '...');
     //var ajax = document.querySelector('#articleSelector');
     var ajax = app.$.articleSelector;
-    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start;
+    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + app.maxArticles;
     app.syncing = true;
     if (replace) {
       ajax.addEventListener('response', handleArticleResponseReplace);
@@ -72,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     //console.log('Our app is ready to rock!');
+    app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
     // Load articles starting from the first one.
     console.log('Loading articles...');
     loadArticles(0, true);
@@ -81,6 +88,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
   });
+  
+  app.loadMoreData = function() {
+    // We can start selecting depending on how many items are in the list:
+    // The event seems to shoot on page load?
+    if (!app.firstLoad) {
+      var startFrom = app.articles.length + 1;
+      console.log('Loading more data starting from ' + startFrom + '...');
+      loadArticles(startFrom, false);
+    } else {
+      app.firstLoad = false;
+      app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
+      app.$.scrollThres.clearTriggers();
+    }
+  };
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
