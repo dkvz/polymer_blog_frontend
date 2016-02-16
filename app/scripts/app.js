@@ -34,37 +34,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // app.baseUrl = '/polymer-starter-kit/';
   }
   
-  function handleArticleResponseReplace(e) {
-    app.articles = e.detail.response;
-    //app.$.articleList.fire('iron-resize');
-    app.syncing = false;
-  }
-  
-  function handleArticleResponseAdd(e) {
-    for (var i = 0; i < e.detail.response.length; i++) {
-      app.articles.push(e.detail.response[i]);
+  function handleResponse(e) {
+    if (app.articles.length) {
+      console.log('Adding more elements:' + e.detail.response.length);
+      for (var i = 0; i < e.detail.response.length; i++) {
+        app.articles.push(e.detail.response[i]);
+      }
+      app.$.articleList.fire('iron-resize');
+      app.$.scrollThres.clearTriggers();
+    } else {
+      app.articles = e.detail.response;
     }
-    //app.$.articleList.fire('iron-resize');
-    // This line is necessary so that the scroll event can trigger again:
-    app.$.scrollThres.clearTriggers();
     app.syncing = false;
   }
   
-  function loadArticles(start, replace) {
+  function loadArticles(start) {
     if (app.syncing) {
       // Still syncinc, not doing shit.
+      console.log('Still syncing...');
       return;
     }
     console.log('Loading articles starting from ' + start + '...');
-    //var ajax = document.querySelector('#articleSelector');
     var ajax = app.$.articleSelector;
-    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + app.maxArticles;
     app.syncing = true;
-    if (replace) {
-      ajax.addEventListener('response', handleArticleResponseReplace);
-    } else {
-      ajax.addEventListener('response', handleArticleResponseAdd);
-    }
+    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + app.maxArticles;
   }
 
   app.displayInstalledToast = function() {
@@ -81,7 +74,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
     // Load articles starting from the first one.
     console.log('Loading articles...');
-    loadArticles(0, true);
+    var ajax = app.$.articleSelector;
+    ajax.addEventListener('response', handleResponse);
+    loadArticles(0);
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -92,8 +87,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.loadMoreData = function() {
     // We can start selecting depending on how many items are in the list:
     // The event seems to shoot on page load?
+    console.log('Firing loadMoreData...');
     if (!app.firstLoad) {
-      var startFrom = app.articles.length + 1;
+      var startFrom = app.articles.length;
       console.log('Loading more data starting from ' + startFrom + '...');
       loadArticles(startFrom, false);
     } else {
