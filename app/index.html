@@ -134,14 +134,6 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                 handle-as="json">
               </iron-ajax>
               
-              <template is="dom-if" if="{{syncing}}">
-                <div id="refresh" class="fit layout vertical center-center">
-                  <div id="refresh-spinner-container" class="layout vertical center-center shrink">
-                    <paper-spinner active></paper-spinner>
-                  </div>
-                </div>
-              </template>
-              
               <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
                 <template>
                   <div class="item">
@@ -158,6 +150,23 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               </iron-list>
               <iron-scroll-threshold on-lower-threshold="loadMoreData" id="scrollThres">
               </iron-scroll-threshold>
+              <template is="dom-if" if="{{syncing}}">
+                <paper-material elevation="2">
+                  <div style="text-align: center">
+                    <paper-spinner active></paper-spinner>
+                  </div>
+                </paper-material>
+              </template>
+              
+              <!--
+              <template is="dom-if" if="{{syncing}}">
+                <div id="refresh" class="fit layout vertical center-center">
+                  <div id="refresh-spinner-container" class="layout vertical center-center shrink">
+                    <paper-spinner active></paper-spinner>
+                  </div>
+                </div>
+              </template>
+              -->
               
             </section>
 
