@@ -123,7 +123,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
         </paper-toolbar>
 
         <!-- Main Content -->
-        <div class="content layout vertical fit" id="contentDiv">
+        <div class="content" id="contentDiv">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
@@ -142,7 +142,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                 </div>
               </template>
               
-              <iron-list items="[[articles]]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
+              <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
                 <template>
                   <div class="item">
                     <article-card title="[[item.title]]" 

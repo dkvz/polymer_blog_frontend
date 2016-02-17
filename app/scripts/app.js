@@ -37,16 +37,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
   
   function handleResponse(e) {
-    if (app.articles.length) {
-      console.log('Adding more elements:' + e.detail.response.length);
-      for (var i = 0; i < e.detail.response.length; i++) {
-        app.articles.push(e.detail.response[i]);
-      }
-      app.$.articleList.fire('iron-resize');
-      app.$.scrollThres.clearTriggers();
-    } else {
-      app.articles = e.detail.response;
+    console.log('Adding more elements:' + e.detail.response.length);
+    for (var i = 0; i < e.detail.response.length; i++) {
+      app.$.articleList.push('items', e.detail.response[i]);
     }
+    //app.$.articleList.fire('iron-resize');
+    app.$.scrollThres.clearTriggers();
     app.syncing = false;
   }
   
@@ -95,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // The event seems to shoot on page load?
     console.log('Firing loadMoreData...');
     if (!app.firstLoad) {
-      var startFrom = app.articles.length;
+      var startFrom = app.$.articleList.items.length;
       console.log('Loading more data starting from ' + startFrom + '...');
       loadArticles(startFrom, false);
     } else {
