@@ -1,0 +1,109 @@
+<!doctype html>
+<!--
+@license
+I think this code is supposed to be BSD licenced. I'm too dumb to understand this licensing schmick.
+-->
+
+<html lang="" id="html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Polymer Starter Kit" />
+  <title>Polymer Layout Experiments</title>
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tile color for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="PSK">
+  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+
+  <!-- Tile icon for Win8 (144x144) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild-->
+
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <!-- endbuild -->
+
+  <!-- will be replaced with elements/elements.vulcanized.html -->
+  <link rel="import" href="elements/elements_limited.html">
+  <!-- endreplace-->
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+
+</head>
+
+<body unresolved class="fullbleed layout vertical">
+  <span id="browser-sync-binding"></span>
+  <template is="dom-bind" id="app">
+
+    
+        <!-- Main Content -->
+        <div id="contentDiv">
+
+              <iron-ajax
+                id="articleSelector"
+                auto
+                handle-as="json">
+              </iron-ajax>
+              
+              <template is="dom-if" if="{{syncing}}">
+                <div id="refresh" class="fit layout vertical center-center">
+                  <div id="refresh-spinner-container" class="layout vertical center-center shrink">
+                    <paper-spinner active></paper-spinner>
+                  </div>
+                </div>
+              </template>
+              
+              <iron-list items="[]" as="item" scroll-target="html" id="articleList" class="flex">
+                <template>
+                  <div class="item">
+                    <article-card title="[[item.title]]" 
+                      article-id="[[item.id]]"
+                      image-src="[[item.thumbImage]]"
+                      comment-count="[[item.commentsCount]]"
+                      publication-date="[[item.date]]">
+                      [[item.summary]]
+                    </article-card>
+                    <br />
+                  </div>
+                </template>
+              </iron-list>
+              <iron-scroll-threshold 
+                on-lower-threshold="loadMoreData" 
+                id="scrollThres" 
+                scroll-target="html" 
+                lower-threshold="800">
+              </iron-scroll-threshold>
+              
+        </div>
+    
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app_list.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>

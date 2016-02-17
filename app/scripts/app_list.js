@@ -40,12 +40,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if (app.articles.length) {
       console.log('Adding more elements:' + e.detail.response.length);
       for (var i = 0; i < e.detail.response.length; i++) {
-        app.articles.push(e.detail.response[i]);
+        //app.articles.push(e.detail.response[i]);
+        app.$.articleList.push('items', e.detail.response[i]);
       }
-      app.$.articleList.fire('iron-resize');
+      //app.$.articleList.fire('iron-resize');
       app.$.scrollThres.clearTriggers();
     } else {
-      app.articles = e.detail.response;
+      //app.articles = e.detail.response;
+      //app.$.articleList.items = e.detail.response;
+      for (var i = 0; i < e.detail.response.length; i++) {
+        app.$.articleList.push('items', e.detail.response[i]);
+      }
+      app.$.scrollThres.clearTriggers();
     }
     app.syncing = false;
   }
@@ -77,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     //console.log('Our app is ready to rock!');
-    app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
+    //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
     // Load articles starting from the first one.
     console.log('Loading articles...');
     var ajax = app.$.articleSelector;
@@ -95,23 +101,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // The event seems to shoot on page load?
     console.log('Firing loadMoreData...');
     if (!app.firstLoad) {
-      var startFrom = app.articles.length;
+      //var startFrom = app.articles.length;
+      var startFrom = app.$.articleList.items.length;
       console.log('Loading more data starting from ' + startFrom + '...');
       loadArticles(startFrom, false);
     } else {
       app.firstLoad = false;
-      app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
+      //app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
       app.$.scrollThres.clearTriggers();
     }
   };
 
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
-    app.$.headerPanelMain.scrollToTop(true);
+    //app.$.headerPanelMain.scrollToTop(true);
   };
 
   app.closeDrawer = function() {
-    app.$.paperDrawerPanel.closeDrawer();
+    //app.$.paperDrawerPanel.closeDrawer();
   };
 
 })(document);
