@@ -39,23 +39,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/', function() {
       app.route = 'home';
+      app.routeFromMenu = 'home';
     });
 
     page(app.baseUrl, function() {
       app.route = 'home';
+      app.routeFromMenu = 'home';
     });
-
-    page('/users', function() {
-      app.route = 'users';
-    });
-
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
+    
+    page('/pages/:name', function(data) { 
+      app.route = 'pages-content';
       app.params = data.params;
+      app.routeFromMenu = 'pages-' + app.params.name;
     });
 
     page('/contact', function() {
       app.route = 'contact';
+      app.routeFromMenu = 'contact';
     });
 
     // 404

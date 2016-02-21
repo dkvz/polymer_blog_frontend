@@ -91,13 +91,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // The event seems to shoot on page load?
     console.log('Firing loadMoreData...');
     if (!app.firstLoad) {
-      var startFrom = app.$.articleList.items.length;
-      console.log('Loading more data starting from ' + startFrom + '...');
-      loadArticles(startFrom, false);
+      if (app.route === 'home') {
+        var startFrom = app.$.articleList.items.length;
+        console.log('Loading more data starting from ' + startFrom + '...');
+        loadArticles(startFrom, false);
+      } else {
+        // We still need to clearTriggers...
+        app.$.scrollThres.clearTriggers();
+      }
     } else {
       app.firstLoad = false;
       app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
       app.$.scrollThres.clearTriggers();
+    }
+  };
+  
+  app.pageChanged = function() {
+    if (app.route === 'pages-content') {
+      console.log('Opening a custom page');
     }
   };
 

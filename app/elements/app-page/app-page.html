@@ -1,0 +1,84 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<dom-module id="app-page">
+  <template>
+    <style>
+      #main {
+        padding: 0;
+        background: var(--article-card-background, white);
+        overflow: auto;
+        padding: var(--article-card-padding, 14px);
+      }
+    </style>
+    <paper-material elevation="2" id="main">
+      
+    </paper-material>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'app-page',
+
+      properties: {
+        'pageName': {
+          type: String,
+          notify: true,
+          observer: '_pageNameChanged'
+        }
+      },
+      
+      _pageNameChanged: function() {
+        // TODO For security reasons, remove all dots and shit from the URL
+        
+        // TODO Show loading spinner or something
+        
+        // Empty the node:
+        var mn = this.$.main;
+        while (mn.firstChild) {
+          mn.removeChild(mn.firstChild);
+        }
+        
+        this.importHref(this.resolveUrl('pages/page-' + this.pageName + '.html'), function(e) {
+          // e.target.import is the import document.
+          //var newElement = document.createElement('custom-page');
+          //Polymer.dom(this.$.container).appendChild(newElement);
+          var template = e.target.import.querySelector('template');
+          // For some reason we need this line or we can't remove the nodes later on:
+          var clone = document.importNode(template.content, true);
+          this.$.main.appendChild(clone);
+        }, function() {
+          // This function can also take a parameter e, I'm leaving it out but
+          // I don't know if it's allowed (lint was complaining though).
+          this._loadErrorPage();
+        });
+        
+        // TODO Hide loading spinner.
+      },
+      
+      _loadErrorPage: function() {
+        this.importHref(this.resolveUrl('pages/error.html'), function(e) {
+          console.log(e.target.import.querySelector('template'));
+          var template = e.target.import.querySelector('template');
+          this.$.main.appendChild(template.content);
+        }, function() {
+          console.log('Error page not present.');
+        });
+      }
+      
+    });
+  })();
+  </script>
+</dom-module>

@@ -68,12 +68,19 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
         </paper-toolbar>
 
         <!-- Drawer Content -->
-        <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+        <paper-menu class="list" attr-for-selected="data-route" selected="[[routeFromMenu]]">
           <a data-route="home" href="{{baseUrl}}">
             <iron-icon icon="home"></iron-icon>
-            <span>Home</span>
+            <span>Accueil</span>
           </a>
-
+          <a data-route="pages-about" href="{{baseUrl}}pages/about">
+            <iron-icon icon="help"></iron-icon>
+            <span>C'est quoi ce blog?</span>
+          </a>
+          <a data-route="pages-contact" href="{{baseUrl}}pages/contact">
+            <iron-icon icon="mail"></iron-icon>
+            <span>Me contacter</span>
+          </a>
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -92,11 +99,14 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
           <paper-menu-button id="topNavNarrow">
             <paper-icon-button icon="arrow-drop-down" class="dropdown-trigger"></paper-icon-button>
             <paper-menu class="dropdown-content">
-                <a href="#">
+                <a href="{{baseUrl}}">
                   <span>Accueil</span>
                 </a>
-                <a href="http://www.google.be">
+                <a href="{{baseUrl}}pages/about">
                   <span>C'est quoi ce blog?</span>
+                </a>
+                <a href="{{baseUrl}}pages/contact">
+                  <span>Me contacter</span>
                 </a>
             </paper-menu>
           </paper-menu-button>
@@ -116,15 +126,23 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             <!-- Moving my narrow only menu (was here before -->
             <div id="topNav">
               <iron-icon icon="more-vert"></iron-icon>
-              <paper-button raised>Accueil</paper-button>
-              <paper-button raised>C'est quoi ce blog?</paper-button>
+              <a href="{{baseUrl}}" class="noHover">
+                <paper-button raised>
+                  Accueil
+                </paper-button>
+              </a>
+              <a href="{{baseUrl}}pages/about" class="noHover">
+                <paper-button raised>
+                  C'est quoi ce blog?
+                </paper-button>
+              </a>
             </div>
           </div>
         </paper-toolbar>
 
         <!-- Main Content -->
         <div class="content" id="contentDiv">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+          <iron-pages attr-for-selected="data-route" selected="{{route}}" on-iron-select="pageChanged">
 
             <section data-route="home">
             
@@ -168,6 +186,10 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               </template>
               -->
               
+            </section>
+            
+            <section data-route="pages-content">
+              <app-page page-name="{{params.name}}"></app-page>
             </section>
 
           </iron-pages>
