@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../styles/shared-styles.html">
+
 
 <dom-module id="blog-article">
   <template>
@@ -17,10 +19,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .mainCard {
+        padding: 0;
+        background: var(--article-card-background, white);
+        overflow: auto;
+      }
+      .content {
+        padding: var(--article-card-padding, 14px);
+      }
     </style>
 
-
-<div>
+<paper-material elevation="3" class="mainCard">
+<div class="content">
 <h1>L&rsquo;homéopathie, c&rsquo;est quoi ?</h1>
 					</header><!-- .entry-header -->
 			<p>Je trouve que l&rsquo;homéopathie est un sujet particulièrement intéressant mêlant histoire, science, pseudo-science/croyances et médecine.</p>
@@ -511,6 +521,7 @@ Après ils cherchent à expliquer l&rsquo;un ou l&rsquo;autre de ces signaux com
 <h1>4. Références</h1>
 <p>J&rsquo;ai tout oublié désolé. Outre les liens que je cite dans l&rsquo;article, j&rsquo;ai beaucoup utilisé les articles de Wikipedia (en Français et en Anglais, il n&rsquo;y a pas les mêmes informations !) tant sur l&rsquo;homéopathie que sur Hahnemann, les méthodes de dilution et tout ce genre de choses.</p>    
 </div>
+</paper-material>
 
    
   </template>
