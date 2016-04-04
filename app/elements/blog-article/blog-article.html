@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
 
@@ -27,19 +28,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: auto;
         margin-right: auto;
       }
-      .content {
-        padding: 6px var(--article-padding, 36px);
-        font-family: medium-content-serif-font, Georgia, Cambria, 'Times New Roman', Times, serif;
-      }
+      
       @media (min-width: 1200px) {
         .mainCard {
-          width: 70%;
+          width: 75%;
         }
       }
     </style>
 
 <paper-material elevation="4" class="mainCard">
-<div class="content">
+<div class="article_content">
 <h1>L&rsquo;homéopathie, c&rsquo;est quoi ?</h1>
 					</header><!-- .entry-header -->
 			<p>Je trouve que l&rsquo;homéopathie est un sujet particulièrement intéressant mêlant histoire, science, pseudo-science/croyances et médecine.</p>
@@ -53,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <br />
   <details id="toc">
     <summary>Table des matières</summary>
-    <ul id="markdown-toc">
+    <ul id="markdown-toc" class="toc">
       <li><a href="#1_1">1.1 Pourquoi l&rsquo;homéopathie ?</a></li>
       <li><a href="#1_2">1.2 Naissance du postulat à l’origine de l’homéopathie</a></li>
       <li><a href="#1_3">1.3 Recherche et développement</a></li>
@@ -62,40 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <br />
 <hr />
 
-<h1>Table des matières</h1>
-<div>
-<a href="#1">1. Historique</a></p>
-<p style="padding-left: 30px;"><a href="#1_1">1.1 Pourquoi l&rsquo;homéopathie ?</a><br />
-<a href="#1_2">1.2 Naissance du postulat à l’origine de l’homéopathie</a><br />
-<a href="#1_3">1.3 Recherche et développement</a><br />
-<a href="#1_4">1.4 Paradoxe</a><br />
-<a href="#1_5">1.5 Une seule solution, la <del>masturbation</del> <del>manifestation</del> dilution (et la succussion aussi)</a><br />
-<a href="#1_6">1.6 Techniques de dilution</a></p>
-<p><a href="#2">2. L&rsquo;homéopathie et la science</a></p>
-<p style="padding-left: 30px;"><a href="#2_1">2.1 L&rsquo;homéopathie moderne</a><br />
-<a href="#2_2">2.2 La mémoire de l&rsquo;eau</a><br />
-<a href="#2_3">2.3 Le cas Oscillococcinum</a><br />
-<a href="#2_4">2.4 Etudes cliniques générales</a><br />
-<a href="#2_5">2.5 La mémoire de l&rsquo;eau, le retour</a><br />
-<a href="#2_6">2.6 Thermoluminescence et trucs qui brillent</a><br />
-<a href="#2_7">2.7 Avis des organisations gouvernementales et de régulation</a><br />
-<a href="#2_8">2.8 Et les homéopathes, ils en pensent quoi ?</a><br />
-<a href="#2_9">2.9 Quid de l’homéopathie pour les trucs pas humains ?</a><br />
-<a href="#2_10">2.10 Aspects éthiques, controverse</a></p>
-<p><a href="#3">3. Pourquoi ?</a></p>
-<p style="padding-left: 30px;"><a href="#3_1">3.1 Que se passe-t-il si je m’enfile tout le flacon?</a><br />
-<a href="#3_2">3.2 Précautions d’emploi, vérifiées?</a><br />
-<a href="#3_3">3.3 A te lire on dirait que tu es contre l’homéopathie?</a><br />
-<a href="#3_4">3.4 Chez moi, l’homéopathie fonctionne régulièrement. T’en pense quoi?</a><br />
-<a href="#3_5">3.5 Tant qu’à faire, autant tester l’homéopathie d’abord non?</a><br />
-<a href="#3_6">3.6 Est-ce qu’il faut y croire pour que ça marche?</a><br />
-<a href="#3_7">3.7 Les études qui montrent que l’homéopathie est efficace, c’est à quel point plus que les placebo?</a><br />
-<a href="#3_8">3.8 Non mais tu te sens supérieur à moi avec ton pseudo-intellectualisme de chiotte?</a><br />
-<a href="#3_9">3.9 Si on mélange toutes sortes de remèdes et qu’on dilue, on a le remède ultime?</a><br />
-<a href="#3_10">3.10 J&rsquo;ai rien capté</a></p>
-<p><a href="#4">4. Références</a>
-</div>
-<h1><span style="font-size: 1.5rem; line-height: 1.5;">1. Historique</span></h1>
+<h1>1. Historique</h1>
 <p>Tout commence avec un personnage du nom de <strong>Samuel Hahnemann</strong>, médecin Allemand qui vécut entre 1755 et 1843, atteingant l&rsquo;age impressionnant de 87 ou 88 avant sa mort si j&rsquo;en crois mon cortex calculatoire frontal.</p>
 <p>L&rsquo;inventeur de l&rsquo;homéopathie dispose d&rsquo;un star-article (label de qualité) sur Wikipedia en Esperanto uniquement. Ceci soulève d&rsquo;emblée des questions dans ma tête sur quel groupe de personne est le plus intéressé à fournir une discussion neutre sur la naissance de l&rsquo;homéopathie. Je ne sais pas pourquoi mais quand j&rsquo;imagine les gens qui parlent l&rsquo;Esperanto je pense à ça:</p>
 <p><a href="http://drdorade.servebeer.com/wp-content/uploads/2013/07/2010-12-26_2235-periodic-martyns-hair-e1293421308127-300x246.png"><img class="aligncenter size-full wp-image-107" alt="2010-12-26_2235-periodic-martyns-hair-e1293421308127-300x246" src="http://drdorade.servebeer.com/wp-content/uploads/2013/07/2010-12-26_2235-periodic-martyns-hair-e1293421308127-300x246.png" width="300" height="246" /></a>C&rsquo;est dommage que je sache pas parler l&rsquo;Esperanto.<br />
