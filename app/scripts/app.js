@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.$.articleList.push('items', e.detail.response[i]);
     }
     //app.$.articleList.fire('iron-resize');
-    app.$.scrollThres.clearTriggers();
+    app.$.scrollThres.clearLower();
     app.syncing = false;
   }
   
@@ -73,7 +73,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     //console.log('Our app is ready to rock!');
-    app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
+    //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
+    app.scrollTarget = app.$.headerPanelMain.scroller;
+    app.$.scrollThres.clearLower();
     // Load articles starting from the first one.
     console.log('Loading articles...');
     var ajax = app.$.articleSelector;
@@ -89,21 +91,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.loadMoreData = function() {
     // We can start selecting depending on how many items are in the list:
     // The event seems to shoot on page load?
+    // Correction: after an iron-threshold update it no longer shoots at load...
+    // This demands a pretty big revision.
     console.log('Firing loadMoreData...');
-    if (!app.firstLoad) {
-      if (app.route === 'home') {
-        var startFrom = app.$.articleList.items.length;
-        console.log('Loading more data starting from ' + startFrom + '...');
-        loadArticles(startFrom, false);
-      } else {
-        // We still need to clearTriggers...
-        app.$.scrollThres.clearTriggers();
-      }
+    //if (!app.firstLoad) {
+    if (app.route === 'home') {
+      var startFrom = app.$.articleList.items.length;
+      console.log('Loading more data starting from ' + startFrom + '...');
+      loadArticles(startFrom, false);
     } else {
+      // We still need to clearTriggers...
+      app.$.scrollThres.clearLower();
+    }
+    //}
+    /*else {
       app.firstLoad = false;
       app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
-      app.$.scrollThres.clearTriggers();
-    }
+      app.$.scrollThres.clearLower();
+    }*/
   };
   
   app.pageChanged = function() {

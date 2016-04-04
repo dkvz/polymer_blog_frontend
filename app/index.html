@@ -170,7 +170,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                   </div>
                 </template>
               </iron-list>
-              <iron-scroll-threshold on-lower-threshold="loadMoreData" id="scrollThres">
+              <iron-scroll-threshold on-lower-trigger="loadMoreData" lower-threshold="1" id="scrollThres" scroll-target="{{scrollTarget}}">
               </iron-scroll-threshold>
               <template is="dom-if" if="{{syncing}}">
                 <paper-material elevation="2">

@@ -15,6 +15,7 @@
   "devDependencies": {},
   "ignore": [],
   "resolutions": {
-    "paper-menu": "4fecb43601"
+    "paper-menu": "4fecb43601",
+    "polymer": "^1.2.4"
   }
 }
