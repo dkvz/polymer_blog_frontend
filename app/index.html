@@ -153,7 +153,8 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               <iron-ajax
                 id="articleSelector"
                 auto
-                handle-as="json">
+                handle-as="json"
+                on-error="handleError">
               </iron-ajax>
               
               <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
@@ -163,7 +164,9 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                       article-id="[[item.id]]"
                       image-src="[[item.thumbImage]]"
                       comment-count="[[item.commentsCount]]"
-                      publication-date="[[item.date]]">
+                      publication-date="[[item.date]]"
+                      article-url="[[item.articleURL]]"
+                      article-url-base="articles">
                       [[item.summary]]
                     </article-card>
                     <br />
