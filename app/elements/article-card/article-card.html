@@ -94,18 +94,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           notify: true
         },
-        'articleUrl': {
-          type: String,
-          notify: true
-        },
         'articleUrlBase': {
           type: String,
           notify: true
         }
       },
       loadArticle: function() {
-        console.log('In loadArticle with URL: ' + this.articleUrl);
-        window.location.href = '#!' + this.articleUrlBase + '/' + this.articleUrl;
+        console.log('In loadArticle with URL: ' + this.articleu);
+        window.location.href = '#!' + this.articleUrlBase + '/' + this.articleu;
       }
     });
   })();

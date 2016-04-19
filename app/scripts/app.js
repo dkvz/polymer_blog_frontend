@@ -23,12 +23,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.baseUrl = '/';
   // Set API URL:
   app.apiBaseUrl = 'http://localhost:9000/';
+  app.articleApiUrl = app.apiBaseUrl + 'article';
   // The array holding all the articles:
   app.articles = [];
   // Boolean that tells if articles are currently loading:
   app.syncing = false;
   // hack I used to prevent firing iron-scroll-threshold:
   app.firstLoad = true;
+  // Text notification to show on top of the index page. Leave blank
+  // for no notification (may be modified in a method later):
+  app.notification = '';
   
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
@@ -79,6 +83,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.addEventListener('dom-change', function() {
     //console.log('Our app is ready to rock!');
     //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
+    app.notification = 'Suite à des soucis de Wordpress j\'ai précipité un prototype de ' +
+    'moteur de blog complètement louche à base de Polymer - En construction totale pour' +
+    ' l\'instant, veuillez m\'excuser.';
+    
     app.scrollTarget = app.$.headerPanelMain.scroller;
     app.$.scrollThres.clearLower();
     // Load articles starting from the first one.

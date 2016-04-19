@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
 
@@ -34,44 +35,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width: 70%;
         }
       }
-      
     </style>
 
-<paper-material elevation="4" class="mainCard">
-<div class="article_content">
-<h1>L&rsquo;homéopathie, c&rsquo;est quoi ?</h1>
-					</header><!-- .entry-header -->
-			<p>Je trouve que l&rsquo;homéopathie est un sujet particulièrement intéressant mêlant histoire, science, pseudo-science/croyances et médecine.</p>
-
-<div class="articleImage alignRight" style="width: 150px">
-<a href="http://drdorade.servebeer.com/wp-content/uploads/2013/08/4943.jpg" target="_blank"><img alt="Chimay" src="http://drdorade.servebeer.com/wp-content/uploads/2013/08/4943.jpg" width="150" height="250" /></a>
-<div class="articleImageLegend">Remède de vieux moine</div>
-</div>
-
-
-<p>Je compile ici un petit travail de recherche que je fais pour ma propre curiosité. J&rsquo;essaye de rester neutre bien que je sois un scientifique athée qui boit régulièrement de la Chimay.</p>
-<p>J&rsquo;essaye de vulgariser les choses quand je peux parce que personnellement je préfère tout voir de la manière la plus claire et simple possible et j&rsquo;aime pas trop le formalisme qui a l&rsquo;air d&rsquo;avoir été complexifié exprès pour que seule une certaine élite comprenne.</p>
-<p>Désolé si je garde pas trace de toutes mes sources, ne prenez pas cet article pour la Bible. C&rsquo;est une réflexion pas un évangile.<br />
-<a href="#1" name="1"></a></p>
-<h1><span id="more-105"></span></h1>
-
-<br />
-  <details id="toc">
-    <summary>Table des matières</summary>
-    <ul id="markdown-toc" class="toc">
-      <li><a href="#1_1">1.1 Pourquoi l&rsquo;homéopathie ?</a></li>
-      <li><a href="#1_2">1.2 Naissance du postulat à l’origine de l’homéopathie</a></li>
-      <li><a href="#1_3">1.3 Recherche et développement</a></li>
-    </ul>
-  </details>
-<br />
-<hr />
-    
-</div>
-</paper-material>
-
-   
+  <iron-ajax
+    id="articleGetter"
+    handle-as="json"
+    on-response="_handleResponse"
+    on-error="_handleError"
+    url="{{article-api-url}}/{{articleurl}}">
+  </iron-ajax>
+  <paper-material elevation="4" class="mainCard">
+    <div class="article_content" id="articleBody">
+      <template is="dom-if" if="{{display404}}">
+        <h1 style="text-align: center">404</h1>
+        <h2 style="text-align: center">Article not found.</h2>
+      </template>
+      <template is="dom-if" if="{{articleContent}}">
+        <h1>{{title}}</h1>
+        <div><b>Par:&nbsp;</b>{{author}}&nbsp;&nbsp;<b>Posté le:&nbsp;</b>{{date}}</div>
+        <br />
+      </template>
+    </div>
+  </paper-material>
   </template>
+  
   <script>
   (function() {
     'use strict';
@@ -80,11 +67,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'blog-article',
 
       properties: {
-        'articleUrl': {
+        'articleurl': {
+          type: String,
+          notify: true,
+          observer: '_articleChanged'
+        },
+        'display404': {
+          type: Boolean,
+          notify: true,
+          value: false
+        },
+        'articleContent': {
+          type: String,
+          notify: true
+        },
+        'title': {
+          type: String,
+          notify: true
+        },
+        'author': {
+          type: String,
+          notify: true
+        },
+        'date': {
           type: String,
           notify: true
         }
+      },
+      _articleChanged: function() {
+        // Fire AJAX request
+        console.log('Were in value changed for article' + this.articleurl);
+        this.$.articleGetter.generateRequest();
+      },
+      _handleError: function() {
+        // TODO I could handle any kind of error by using a parameter e to get the
+        // event and check what happened, but I'm going to assume 404 for the moment.
+        this.display404 = true;
+        console.log('Handled an error with the article');
+        this.articleContent = '';
+      },
+      _handleResponse: function(e) {
+        // I'm not using last-response in the component because I want
+        // to perform transformations on the body of the article, client-side.
+        console.log(e.detail.response);
+        this.title = e.detail.response.title;
+        this.author = e.detail.response.author;
+        this.date = e.detail.response.date;
+        this.articleContent = e.detail.response.content;
+        var contentDiv = document.createElement('div');
+        contentDiv.innerHTML = this.articleContent;
+        this.$.articleBody.appendChild(contentDiv);
       }
+      
     });
   })();
   </script>

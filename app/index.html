@@ -81,10 +81,6 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             <iron-icon icon="mail"></iron-icon>
             <span>Me contacter</span>
           </a>
-          <a data-route="articles" href="{{baseUrl}}articles/test">
-            <iron-icon icon="help"></iron-icon>
-            <span>Test article page</span>
-          </a>
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -157,6 +153,12 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                 on-error="handleError">
               </iron-ajax>
               
+              <template is="dom-if" if="{{notification}}">
+                <paper-material>
+                  <b>{{notification}}</b>
+                </paper-material>
+              </template>
+              
               <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
                 <template>
                   <div class="item">
@@ -165,7 +167,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                       image-src="[[item.thumbImage]]"
                       comment-count="[[item.commentsCount]]"
                       publication-date="[[item.date]]"
-                      article-url="[[item.articleURL]]"
+                      articleu="[[item.articleURL]]"
                       article-url-base="articles">
                       [[item.summary]]
                     </article-card>
@@ -200,7 +202,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             </section>
             
             <section data-route="articles">
-              <blog-article article-url="{{articleParams.name}}"></blog-article>
+              <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}"></blog-article>
             </section>
 
           </iron-pages>
