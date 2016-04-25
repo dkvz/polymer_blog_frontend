@@ -119,7 +119,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
           </div>
 
           <div class="bottom bottom-container horizontal layout">
-            <div class="bottom-title paper-font-subhead" id="subtit">Ma mère en short</div>
+            <div class="bottom-title paper-font-subhead" id="subtit">Vas-y répète le mot trompette dans ta tête</div>
           </div>
           
           <div class="bottom bottom-container horizontal end-justified flex layout">
@@ -154,8 +154,8 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               </iron-ajax>
               
               <template is="dom-if" if="{{notification}}">
-                <paper-material>
-                  <b>{{notification}}</b>
+                <paper-material id="notif">
+                  {{notification}}
                 </paper-material>
               </template>
               
