@@ -117,6 +117,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var contentDiv = document.createElement('div');
         contentDiv.innerHTML = this.articleContent;
         this.$.articleBody.appendChild(contentDiv);
+      },
+      _processArticle: function(article) {
+        // We need to find all the Hx elements and generate the table of content using that.
+        
       }
       
     });

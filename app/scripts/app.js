@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Sets app default base URL
   app.baseUrl = '/';
   // Set API URL:
+  //app.apiBaseUrl = 'http://dorade-api.servebeer.com/';
   app.apiBaseUrl = 'http://localhost:9000/';
   app.articleApiUrl = app.apiBaseUrl + 'article';
   // The array holding all the articles:
@@ -65,6 +66,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + maxArt;
   }
+  
+  app.scrollToItem = function(itm) {
+    console.log('Scrolling to item ' + itm + '...');
+    var scrollTo = document.querySelector('#' + itm);
+    if (scrollTo) {
+      scrollTo.scrollIntoView();
+    }
+  };
   
   app.handleError = function() {
     console.log('No more articles to load.');
