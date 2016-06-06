@@ -114,13 +114,98 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.author = e.detail.response.author;
         this.date = e.detail.response.date;
         this.articleContent = e.detail.response.content;
+        this._processArticle();
         var contentDiv = document.createElement('div');
         contentDiv.innerHTML = this.articleContent;
         this.$.articleBody.appendChild(contentDiv);
       },
-      _processArticle: function(article) {
+      addTOC: function(contentObj, lvl, maxLvl, start, end, lvlStr) {
+        var count = 1;
+        var lookingFor = '<h' + lvl + '>';
+        var lookingForClose = '</h' + lvl + '>';
+        lvlStr = lvlStr + '_' + lvl;
+        var stopLooking = false;
+        var hasElements = false;
+        var addedChars = 0;
+
+        while (!stopLooking) {
+          var first = contentObj.content.indexOf(lookingFor, start);
+          // Check if we did find an hX element:
+          if (first >= 0 && first < end) {
+            // Extract the title.
+            // We have string.substring(start, end)
+            // Find the end tag first:
+            var closeTag = contentObj.content.indexOf(lookingForClose, first);
+            if (closeTag < 0 || closeTag >= end) {
+              closeTag = end;
+            }
+
+            // At this point we can add the <ul> to the TOC.
+            if (!hasElements) {
+              contentObj.toc += '<ul>';
+              hasElements = true;
+            }
+
+            var title = contentObj.content.substring(first + lookingFor.length, closeTag);
+            if (title.length === 0) {
+              title = 'Empty Title';
+            }
+            // Add this title to the TOC:
+            //var anchor = '<a onclick="app.scrollToItem(\'' + lvlStr + '_' + lvl + '\')"></a>';
+            // Let's do it generic first:
+            contentObj.toc += '<li>' + title + '</li>\n';
+            // Add the anchor, will look like this:
+            // We need to add an id to the Hx element that we're working with here.
+            var addLvlStr = ' id="' + lvlStr + '_' + lvl + '_' + count +  '"';
+            contentObj.content = contentObj.content.substring(0, first + 3) + addLvlStr + 
+              contentObj.content.substring(first + 3, contentObj.content.length);
+            count++;
+            addedChars += addLvlStr.length;
+
+            // Now is time to make the recursion.
+            // We need to know if there is a next hx element, or just use the whole content 
+            // length for this.
+            // content has changed: the length is now bigger due to the id="".
+            // Look for the next one. If no next one, we use the whole length of the content.
+            // The variable end changedd because we modified content.
+            end += addLvlStr.length;
+            var next = contentObj.content.indexOf(lookingFor, first + 
+              lookingFor.length + addLvlStr.length);
+            if (next < 0 || next >= end) {
+              next = end;
+            }
+            if (lvl < maxLvl) {
+              var added = this.addTOC(contentObj, lvl + 1, maxLvl, first, next, lvlStr);
+              // When we get back here content may have changed a lot. The positions start 
+              // and end need to change.
+              end += added;
+            }
+            
+            // The variable start has to change for the loop to work.
+            start = closeTag + lookingForClose.length + addLvlStr.length;
+            if (start >= end) {
+              start = end;
+            }
+          } else {
+            // No more elements after this, we can stop looking.
+            stopLooking = true;
+            if (hasElements) {
+              // We need to close the <ul> in the TOC.
+              contentObj.toc += '</ul>';
+            }
+          }
+        }
+        return addedChars;
+      },
+      _processArticle: function() {
         // We need to find all the Hx elements and generate the table of content using that.
-        
+        var contObj = {
+          toc: '',
+          content: ''
+        };
+        contObj.content = this.articleContent;
+        this.addTOC(contObj, 1, 4, 0, contObj.content.length, 'toc');
+        this.articleContent = contObj.toc + contObj.content;
       }
       
     });

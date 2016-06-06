@@ -61,8 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-if" if="{{imageSrc}}">
           <img src="{{imageSrc}}" class="right topImg" />
         </template>
-        <div class="content">
-            <content></content>
+        <div class="content" id="cardBody">
+            
         </div>
       </div>
       <div class="bottom">
@@ -97,11 +97,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'articleUrlBase': {
           type: String,
           notify: true
+        },
+        'content': {
+          type: String,
+          notify: true,
+          observer: '_contentChanged'
         }
       },
       loadArticle: function() {
         console.log('In loadArticle with URL: ' + this.articleu);
         window.location.href = '#!' + this.articleUrlBase + '/' + this.articleu;
+      },
+      _contentChanged: function() {
+        console.log('contentChanged fired for article card.');
+        var contentDiv = document.createElement('div');
+        contentDiv.innerHTML = this.content;
+        this.$.cardBody.appendChild(contentDiv);
       }
     });
   })();

@@ -22,8 +22,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Sets app default base URL
   app.baseUrl = '/';
   // Set API URL:
-  //app.apiBaseUrl = 'http://dorade-api.servebeer.com/';
-  app.apiBaseUrl = 'http://localhost:9000/';
+  app.apiBaseUrl = 'http://dorade-api.servebeer.com/';
+  //app.apiBaseUrl = 'http://localhost:9000/';
   app.articleApiUrl = app.apiBaseUrl + 'article';
   // The array holding all the articles:
   app.articles = [];
