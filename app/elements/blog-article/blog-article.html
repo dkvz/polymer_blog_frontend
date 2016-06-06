@@ -151,12 +151,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               title = 'Empty Title';
             }
             // Add this title to the TOC:
-            //var anchor = '<a onclick="app.scrollToItem(\'' + lvlStr + '_' + lvl + '\')"></a>';
+            // <a onclick="app.scrollToItem('a1_1')">Go to top</a>
+            // var anchor = '<a onclick="app.scrollToItem(\'' + lvlStr + '_' + lvl + '\')"></a>';
             // Let's do it generic first:
-            contentObj.toc += '<li>' + title + '</li>\n';
+            var addLvlStrPartial = lvlStr + '_' + lvl + '_' + count;
+            contentObj.toc += '<li><a onclick="app.scrollToItem(\'' + addLvlStrPartial + '\')">' + 
+              title + '</a></li>\n';
             // Add the anchor, will look like this:
             // We need to add an id to the Hx element that we're working with here.
-            var addLvlStr = ' id="' + lvlStr + '_' + lvl + '_' + count +  '"';
+            var addLvlStr = ' id="' + addLvlStrPartial +  '"';
             contentObj.content = contentObj.content.substring(0, first + 3) + addLvlStr + 
               contentObj.content.substring(first + 3, contentObj.content.length);
             count++;
