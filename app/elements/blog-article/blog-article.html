@@ -109,7 +109,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _handleResponse: function(e) {
         // I'm not using last-response in the component because I want
         // to perform transformations on the body of the article, client-side.
-        console.log(e.detail.response);
+        if (this.title) {
+          // We had a previous article, remove the last child from articleBody:
+          var item = this.$.articleBody.lastElementChild;
+          this.$.articleBody.removeChild(item);
+        }
         this.title = e.detail.response.title;
         this.author = e.detail.response.author;
         this.date = e.detail.response.date;
