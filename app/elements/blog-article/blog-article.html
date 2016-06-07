@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             // <a onclick="app.scrollToItem('a1_1')">Go to top</a>
             // var anchor = '<a onclick="app.scrollToItem(\'' + lvlStr + '_' + lvl + '\')"></a>';
             // Let's do it generic first:
-            var addLvlStrPartial = lvlStr + '_' + lvl + '_' + count;
+            var addLvlStrPartial = lvlStr + '_' + count;
             contentObj.toc += '<li><a onclick="app.scrollToItem(\'' + addLvlStrPartial + '\')">' + 
               title + '</a></li>\n';
             // Add the anchor, will look like this:
@@ -182,7 +182,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               next = end;
             }
             if (lvl < maxLvl) {
-              var added = this.addTOC(contentObj, lvl + 1, maxLvl, first, next, lvlStr);
+              var added = this.addTOC(
+                contentObj, lvl + 1, maxLvl, first, next, lvlStr + '_' + count
+                );
               // When we get back here content may have changed a lot. The positions start 
               // and end need to change.
               end += added;
