@@ -107,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       loadArticle: function() {
         console.log('In loadArticle with URL: ' + this.articleu);
-        window.location.href = '#!' + this.articleUrlBase + '/' + this.articleu;
+        window.location.href = this.articleUrlBase + '/' + this.articleu;
       },
       _contentChanged: function() {
         console.log('contentChanged fired for article card.');
