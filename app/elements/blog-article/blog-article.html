@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
 
@@ -46,6 +47,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </iron-ajax>
   <paper-material elevation="4" class="mainCard">
     <div class="article_content" id="articleBody">
+      <template is="dom-if" if="{{syncing}}">
+        <div style="text-align: center; padding: 20px">
+          <paper-spinner active></paper-spinner>
+        </div>
+      </template>
       <template is="dom-if" if="{{display404}}">
         <h1 style="text-align: center">404</h1>
         <h2 style="text-align: center">Article not found.</h2>
@@ -92,16 +98,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'date': {
           type: String,
           notify: true
+        },
+        'syncing': {
+          type: Boolean,
+          notify: true
         }
       },
       _articleChanged: function() {
         // Fire AJAX request
-        console.log('Were in value changed for article' + this.articleurl);
+        this.syncing = true;
         this.$.articleGetter.generateRequest();
       },
       _handleError: function() {
         // TODO I could handle any kind of error by using a parameter e to get the
         // event and check what happened, but I'm going to assume 404 for the moment.
+        this.syncinc = false;
         this.display404 = true;
         console.log('Handled an error with the article');
         this.articleContent = '';
@@ -122,6 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var contentDiv = document.createElement('div');
         contentDiv.innerHTML = this.articleContent;
         this.$.articleBody.appendChild(contentDiv);
+        this.syncing = false;
       },
       addTOC: function(contentObj, lvl, maxLvl, start, end, lvlStr) {
         var count = 1;
