@@ -49,12 +49,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --sans-serif-font: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
     
   }
+  
+  /* TODO ESSAYER PLUS TARD EN METTANT CE STYLE SUR L'ID DE LA BONNE TOOLBAR */
+  paper-scroll-header-panel {
+    --paper-scroll-header-panel-full-header: {
+      background-color: var(--dark-primary-color);
+      background-image: url("../images/gillesplusmini.png");
+      /*background-size: contain !important;*/
+    };
+    /* background for toolbar when it is condensed */
+    --paper-scroll-header-panel-condensed-header: {
+      background-color: var(--primary-text-color);
+      background-image: none;
+    };
+
+  }
 
   /* General styles */
-  
-  .testClass {
-    color: red;
-  }
   
   .article-content p {
     margin: 0 0 24px;
@@ -144,6 +155,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* Required for main area's paper-scroll-header-panel custom condensing transformation */
     -webkit-transform-origin: left center;
     transform-origin: left center;
+  }
+  
+  #mainToolbar {
+    background-color: transparent;
   }
 
   /* Height of the scroll area */
