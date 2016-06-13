@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../styles/shared-styles.html">
+
 
 <dom-module id="app-page">
   <template>
@@ -19,9 +21,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background: var(--article-card-background, white);
         overflow: auto;
         padding: var(--article-card-padding, 14px);
+        margin-right: auto;
+        margin-left: auto;
       }
+      
+      @media all and (min-width: 601px) and (max-width: 1600px) {
+        .paperCard {
+          width: var(--paper-material-medium-width, 95%);
+        }
+      }
+      
+      @media all and (min-width: 1601px) {
+        .paperCard {
+          width: var(--paper-material-large-width, 80%);
+        }
+      }
+
     </style>
-    <paper-material elevation="2" id="main">
+    <paper-material elevation="2" id="main" class="paperCard">
       
     </paper-material>
   </template>

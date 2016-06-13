@@ -23,6 +23,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background: var(--article-card-background, white);
         overflow: auto;
       }
+      .paperCard {
+        margin-left: auto;
+        margin-right: auto;
+      }
       paper-material:hover{
         @apply(--shadow-elevation-16dp);
       }
@@ -51,9 +55,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 110px;
         box-shadow: 4px 2px 2px #888888;
       }
+      
+      @media all and (max-width: 600px) {
+        paper-button {
+          font-size: 0.8em;
+        }
+      }
+      
+      @media all and (min-width: 601px) and (max-width: 1600px) {
+        .paperCard {
+          width: var(--paper-material-medium-width, 95%);
+        }
+      }
+      
+      @media all and (min-width: 1601px) {
+        .paperCard {
+          width: var(--paper-material-large-width, 80%);
+        }
+      }
+      
     </style>
     
-    <paper-material elevation="2" class="mainCard" on-tap="loadArticle">
+    <paper-material elevation="2" class="mainCard paperCard" on-tap="loadArticle">
       <div class="top">
         <div class="left">
           <h2>{{title}}</h2>

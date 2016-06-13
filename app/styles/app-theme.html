@@ -48,6 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     --sans-serif-font: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
     
+    --paper-material-large-width: 80%;
+    --paper-material-medium-width: 95%;
+    
   }
   
   /* TODO ESSAYER PLUS TARD EN METTANT CE STYLE SUR L'ID DE LA BONNE TOOLBAR */
@@ -118,7 +121,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     @apply(--layout-center);
     text-decoration: none;
     color: var(--menu-link-color);
-    font-family: 'Roboto', 'Noto', sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-size: 14px;
@@ -138,6 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   #mainToolbar {
     box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    background-color: transparent;
   }
 
   #mainToolbar .middle-container  {
@@ -155,10 +158,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* Required for main area's paper-scroll-header-panel custom condensing transformation */
     -webkit-transform-origin: left center;
     transform-origin: left center;
-  }
-  
-  #mainToolbar {
-    background-color: transparent;
   }
 
   /* Height of the scroll area */
@@ -178,7 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     paper-material {
       --menu-container-display: none;
-      width: calc(97.33% - 32px);
+      width: 100%;
       padding-left: 16px;
       padding-right: 16px;
     }
@@ -202,7 +201,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   @media (min-width: 601px) {
 
     paper-material {
-      width: calc(98% - 46px);
+      /*width: calc(98% - 46px);*/
+      width: var(--paper-material-medium-width);
       margin-bottom: 32px;
       padding-left: 30px;
       padding-right: 30px;
@@ -220,6 +220,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 8px 62px;
     }
 
+  }
+  
+  @media (min-width: 1601px) and (max-width: 1920px) {
+    
+    paper-material {
+      width: var(--paper-material-large-width);
+      margin-bottom: 32px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    
   }
 
   /* Material Design Adaptive Breakpoints */

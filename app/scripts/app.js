@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   var app = document.querySelector('#app');
   
   // Max number of articles to load:
-  app.maxArticles = '10';
+  app.maxArticles = '6';
   // The max to use while scrolling for more articles:
   app.maxArticlesScroll = '2';
   // Sets app default base URL
@@ -92,9 +92,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.addEventListener('dom-change', function() {
     //console.log('Our app is ready to rock!');
     //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
-    app.notification = 'Suite à des soucis de Wordpress j\'ai précipité un prototype de ' +
-    'moteur de blog complètement louche à base de Polymer - En construction totale pour' +
-    ' l\'instant, veuillez m\'excuser.';
     
     app.scrollTarget = app.$.headerPanelMain.scroller;
     app.$.scrollThres.clearLower();
