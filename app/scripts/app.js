@@ -34,6 +34,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Text notification to show on top of the index page. Leave blank
   // for no notification (may be modified in a method later):
   app.notification = '';
+  // Title base of the app:
+  app.titleBase = 'Blog des gens compliqués';
   
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and

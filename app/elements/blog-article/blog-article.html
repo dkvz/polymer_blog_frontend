@@ -102,6 +102,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'syncing': {
           type: Boolean,
           notify: true
+        },
+        'titleBase': {
+          type: String,
+          notify: true,
+          value: ''
         }
       },
       _articleChanged: function() {
@@ -126,6 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.articleBody.removeChild(item);
         }
         this.title = e.detail.response.title;
+        document.title = this.titleBase + ' - ' + this.title;
         this.author = e.detail.response.author;
         this.date = e.detail.response.date;
         this.articleContent = e.detail.response.content;
