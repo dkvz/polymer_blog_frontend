@@ -9,15 +9,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../styles/shared-styles.html">
 
 <dom-module id="comment-section">
   <template>
+    <style is="custom-style" include="shared-styles"></style>
     <style>
       :host {
         display: block;
       }
+      .mainCard {
+        background: var(--article-card-background, white);
+        overflow: auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .content {
+        padding: var(--article-card-padding, 14px);
+      }
+      
+      @media (min-width: 1200px) {
+        .mainCard {
+          width: 70%;
+        }
+      }
     </style>
-    
+    <paper-material class="mainCard" elevation="4">
+      <div class="content">
+        <h1>Comments</h1>
+        <a on-tap="showForm">Test</a><br />
+        <div id="comForm">
+          Check
+        </div>
+      </div>
+    </paper-material>
   </template>
   <script>
   (function() {
@@ -28,6 +55,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         
+      },
+      showForm: function() {
+        console.log('In showForm');
+        this.$.comForm.hide();
+      },
+      hideForm: function() {
+      
       }
     });
   })();
