@@ -10,6 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
@@ -29,6 +33,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .content {
         padding: var(--article-card-padding, 14px);
       }
+      #comForm {
+        display: none;
+      }
+      .submitButton {
+        float: right;
+        padding-bottom: 10px;
+      }
       
       @media (min-width: 1200px) {
         .mainCard {
@@ -39,12 +50,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material class="mainCard" elevation="4">
       <div class="content">
         <h1>Comments</h1>
-        <a on-tap="showForm">Test</a><br />
+        <a on-tap="showForm" id="comFormLink">Ecrire un commentaire...</a>
         <div id="comForm">
-          Check
+          <paper-input id="labelAuthor" label="Votre nom" required auto-validate error-message="Il faut un auteur."></paper-input>
+          <paper-textarea id="labelComment" label="Commentaire" required auto-validate error-message="Votre commentaire il est vide."></paper-textarea>
+          <paper-input label="Combien ça fait 4 x 0 + 2 ?" id="labelQuestion">
+            <iron-icon icon="help" prefix></iron-icon>
+          </paper-input>
+          <!-- TODO I could add a spinner somewhere here, for the sending -->
+          <div class="submitButton"><paper-button raised>Envoyer</paper-button></div>
         </div>
       </div>
     </paper-material>
+    
+    
+    
   </template>
   <script>
   (function() {
@@ -58,10 +78,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       showForm: function() {
         console.log('In showForm');
-        this.$.comForm.hide();
-      },
-      hideForm: function() {
-      
+        this.$.comForm.style.display = 'block';
+        this.$.comFormLink.style.display = 'none';
+        this.$.comForm.scrollIntoView();
       }
     });
   })();
