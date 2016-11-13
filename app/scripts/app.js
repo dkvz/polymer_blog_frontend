@@ -120,6 +120,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var startFrom = app.$.articleList.items.length;
       console.log('Loading more data starting from ' + startFrom + '...');
       loadArticles(startFrom, false);
+    } else if (app.route === 'articles') {
+      app.$.commentSection.loadMoreComments();
+      app.$.scrollThres.clearLower();
     } else {
       // We still need to clearTriggers...
       app.$.scrollThres.clearLower();

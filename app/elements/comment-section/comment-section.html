@@ -10,10 +10,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../../styles/shared-styles.html">
 
@@ -40,6 +43,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: right;
         padding-bottom: 10px;
       }
+      .cardTopL {
+        float: left;
+        font-weight: bolder;
+      }
+      .cardTopR {
+        float: right;
+      }
+      .cardContent {
+        clear: both;
+      }
       
       @media (min-width: 1200px) {
         .mainCard {
@@ -63,7 +76,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </paper-material>
     
+    <br />
     
+    <iron-ajax
+      id="commentGetter"
+      auto
+      handle-as="json"
+      on-response="_handleCommentResponse"
+      on-error="_handleCommentError">
+    </iron-ajax>
+    
+    <template is="dom-if" if="{{synchingComments}}">
+      <paper-material class="mainCard">
+        <div style="text-align: center; padding: 20px">
+          <paper-spinner active></paper-spinner>
+        </div>
+      </paper-material>
+    </template>
+    
+    <template is="dom-repeat" items="{{comments}}">
+      <paper-card heading="[[item.number]]">
+        <div class="cardTopL">
+          [[item.author]]]
+        </div>
+        <div class="cardTopR">
+          [[item.date]]]
+        </div>
+        <div class="cardContent">
+          [[item.content]]
+        </div>
+      </paper-card>
+    </template>
     
   </template>
   <script>
@@ -74,13 +117,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'comment-section',
 
       properties: {
-        
+        'comments': {
+          type: Array,
+          notify: true,
+          value: []
+        },
+        'apiBaseUrl': {
+          type: String,
+          notify: true
+        },
+        'articleId': {
+          type: Number,
+          notify: true,
+          observer: '_articleIdChanged'
+        },
+        'articleurl': {
+          type: String,
+          notify: true
+        },
+        'maxComments': {
+          type: Number,
+          notify: true,
+          value: 5
+        },
+        'synchingComments': {
+          type: Boolean,
+          notify: true,
+          value: false
+        }
       },
       showForm: function() {
         console.log('In showForm');
         this.$.comForm.style.display = 'block';
         this.$.comFormLink.style.display = 'none';
         this.$.comForm.scrollIntoView();
+      },
+      loadMoreComments: function() {
+        this.synchingComments = true;
+        var startFrom = this.comments.length;
+        this.$.commentGetter.url = this.apiBaseUrl + '/comments-starting-from/' + 
+          this.articleId + '?start=' + startFrom + '&max=' + this.maxComments;
+      },
+      _articleIdChanged: function() {
+        this.synchingComments = false;
+        this.comments = [];
+      },
+      _handleCommentError: function() {
+        console.log('No more comments.');
+        this.synchingComments = false;
+      },
+      _handleCommentResponse: function(e) {
+        console.log('Received response for more comments...');
+        if (e.detail.response.length) {
+          for (var i = 0; i < e.detail.response.length; i++) {
+            var toPush = e.detail.response[i];
+            toPush.number = i;
+            // Replace line feeds with <br />
+            toPush.comment = toPush.comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            this.push('comments', toPush);
+          }
+        }
+        this.synchingComments = false;
       }
     });
   })();
