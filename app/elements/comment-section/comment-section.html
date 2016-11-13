@@ -10,7 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
@@ -51,6 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: right;
       }
       .cardContent {
+        border-top: 1px solid silver;
+        margin-top: var(--article-card-padding, 14px);
         clear: both;
       }
       
@@ -80,7 +81,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <iron-ajax
       id="commentGetter"
-      auto
       handle-as="json"
       on-response="_handleCommentResponse"
       on-error="_handleCommentError">
@@ -95,17 +95,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
     
     <template is="dom-repeat" items="{{comments}}">
-      <paper-card heading="[[item.number]]">
-        <div class="cardTopL">
-          [[item.author]]]
+      <paper-material class="mainCard" elevation="2">
+        <div class="content">
+          <h3>&#9839;[[item.number]]</h3>
+          <div class="cardTopL">
+            [[item.author]]
+          </div>
+          <div class="cardTopR">
+            [[item.date]]
+          </div>
         </div>
-        <div class="cardTopR">
-          [[item.date]]]
+        <div class="cardContent content">
+          <pre>[[item.comment]]</pre>
         </div>
-        <div class="cardContent">
-          [[item.content]]
         </div>
-      </paper-card>
+      </paper-material>
+      <br />
     </template>
     
   </template>
@@ -128,12 +133,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         'articleId': {
           type: Number,
-          notify: true,
-          observer: '_articleIdChanged'
+          notify: true
         },
         'articleurl': {
           type: String,
-          notify: true
+          notify: true,
+          observer: '_articleIdChanged'
         },
         'maxComments': {
           type: Number,
@@ -155,8 +160,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loadMoreComments: function() {
         this.synchingComments = true;
         var startFrom = this.comments.length;
-        this.$.commentGetter.url = this.apiBaseUrl + '/comments-starting-from/' + 
-          this.articleId + '?start=' + startFrom + '&max=' + this.maxComments;
+        console.log(this.apiBaseUrl + 'comments-starting-from/' + 
+          this.articleurl + '?start=' + startFrom + '&max=' + this.maxComments);
+        this.$.commentGetter.url = this.apiBaseUrl + 'comments-starting-from/' + 
+          this.articleurl + '?start=' + startFrom + '&max=' + this.maxComments;
+        this.$.commentGetter.generateRequest();
       },
       _articleIdChanged: function() {
         this.synchingComments = false;
@@ -168,12 +176,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _handleCommentResponse: function(e) {
         console.log('Received response for more comments...');
+        var initialSize = this.comments.length;
         if (e.detail.response.length) {
           for (var i = 0; i < e.detail.response.length; i++) {
             var toPush = e.detail.response[i];
-            toPush.number = i;
-            // Replace line feeds with <br />
-            toPush.comment = toPush.comment.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            toPush.number = initialSize + i + 1;
             this.push('comments', toPush);
           }
         }

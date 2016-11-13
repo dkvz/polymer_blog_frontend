@@ -14,8 +14,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }*/
 
 @import url(//fonts.googleapis.com/css?family=Noto+Sans);
+@import url(//fonts.googleapis.com/css?family=Raleway);
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
   color: #353535;
   margin: 0px;
   background-image: url('../images/patgpibgray.jpg');
