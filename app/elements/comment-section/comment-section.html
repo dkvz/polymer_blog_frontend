@@ -54,6 +54,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-top: var(--article-card-padding, 14px);
         clear: both;
       }
+      .warning {
+        color: red;
+        font-weight: bolder;
+      }
       
       @media (min-width: 1200px) {
         .mainCard {
@@ -61,18 +65,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
     </style>
+    
+    <iron-ajax
+      id="commentSetter"
+      handle-as="json"
+      on-response="_handleSaveResponse"
+      on-error="_handleSaveError"
+      ontent-type="application/x-www-form-urlencoded"
+      method="POST"
+      url="{{apiBaseUrl}}comments">
+    </iron-ajax>
+    
     <paper-material class="mainCard" elevation="4">
       <div class="content">
         <h1>Comments</h1>
         <a on-tap="showForm" id="comFormLink">Ecrire un commentaire...</a>
         <div id="comForm">
-          <paper-input id="labelAuthor" label="Votre nom" required auto-validate error-message="Il faut un auteur."></paper-input>
-          <paper-textarea id="labelComment" label="Commentaire" required auto-validate error-message="Votre commentaire il est vide."></paper-textarea>
-          <paper-input label="Combien ça fait 4 x 0 + 2 ?" id="labelQuestion">
+          <paper-input id="labelAuthor" label="Votre nom" required auto-validate error-message="Il faut un auteur." value="{{formAuthor}}"></paper-input>
+          <paper-textarea id="labelComment" label="Commentaire" required auto-validate error-message="Votre commentaire il est vide." value="{{formComment}}"></paper-textarea>
+          <paper-input label="Combien ça fait 4 x 0 + 2 ?" id="labelQuestion" value="{{formCaptchaAnswer}}">
             <iron-icon icon="help" prefix></iron-icon>
           </paper-input>
           <!-- TODO I could add a spinner somewhere here, for the sending -->
-          <div class="submitButton"><paper-button raised>Envoyer</paper-button></div>
+          <template is="dom-if" if="warningMessage">
+            <div class="warning">{{warningMessage}}</div>
+          </template>
+          <div class="submitButton"><paper-button raised on-tap="_sendComment">Envoyer</paper-button></div>
         </div>
       </div>
     </paper-material>
@@ -127,6 +145,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           value: []
         },
+        'formAuthor': {
+          type: String,
+          notify: true
+        },
+        'formComment': {
+          type: String,
+          notify: true
+        },
+        'formCaptchaAnswer': {
+          type: String,
+          notify: true
+        },
+        'warningMessage': {
+          type: String,
+          notify: true,
+          value: ''
+        },
         'apiBaseUrl': {
           type: String,
           notify: true
@@ -160,14 +195,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loadMoreComments: function() {
         this.synchingComments = true;
         var startFrom = this.comments.length;
-        console.log(this.apiBaseUrl + 'comments-starting-from/' + 
-          this.articleurl + '?start=' + startFrom + '&max=' + this.maxComments);
         this.$.commentGetter.url = this.apiBaseUrl + 'comments-starting-from/' + 
           this.articleurl + '?start=' + startFrom + '&max=' + this.maxComments;
         this.$.commentGetter.generateRequest();
       },
       _articleIdChanged: function() {
         this.synchingComments = false;
+        this.warningMessage = '';
         this.comments = [];
       },
       _handleCommentError: function() {
@@ -185,6 +219,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
         this.synchingComments = false;
+      },
+      _handleSaveError: function() {
+        console.log('Error saving the comment.');
+      },
+      _handleSaveResponse: function(e) {
+        console.log('Saved a comment.');
+        console.log(e);
+      },
+      _sendComment: function() {
+        if (this.formAuthor && this.formAuthor.length > 0 && 
+          this.formComment && this.formComment.length > 0) {
+          if (this.formCaptchaAnswer === '2') {
+            // I should be able to put an objet as the body of the iron-ajax
+            // component and it will translate it in url-encoded data.
+            this.$.commentSetter.body = JSON.stringify({'articleurl': this.articleurl, 
+              'author': this.formAuthor, 'comment': this.formComment});
+            this.$.commentSetter.generateRequest();
+          } else {
+            this.warningMessage = 'Merci de revoir les règles de priorité' +
+              ' des opérateurs mathématiques.';
+          }
+        }
       }
     });
   })();
