@@ -58,6 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: red;
         font-weight: bolder;
       }
+      .info {
+        font-weight: bolder;
+        color: var(--dark-primary-color);
+      }
       
       @media (min-width: 1200px) {
         .mainCard {
@@ -89,6 +93,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- TODO I could add a spinner somewhere here, for the sending -->
           <template is="dom-if" if="warningMessage">
             <div class="warning">{{warningMessage}}</div>
+          </template>
+          <template is="dom-if" if="infoMessage">
+            <div class="info">{{infoMessage}}</div>
           </template>
           <div class="submitButton"><paper-button raised on-tap="_sendComment">Envoyer</paper-button></div>
         </div>
@@ -184,6 +191,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           notify: true,
           value: false
+        },
+        'infoMessage': {
+          type: String,
+          notify: true
         }
       },
       showForm: function() {
@@ -222,10 +233,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _handleSaveError: function() {
         console.log('Error saving the comment.');
+        this.warningMessage = 'Votre message n\'a pas pu être enregistré pour ' +
+          'une raison obscure.';
+        this.infoMessage = '';
       },
-      _handleSaveResponse: function(e) {
+      _handleSaveResponse: function() {
         console.log('Saved a comment.');
-        console.log(e);
+        this.warningMessage = '';
+        this.infoMessage = 'Commentaire enregistré (normalement quoi).';
+        this.loadMoreComments();
       },
       _sendComment: function() {
         if (this.formAuthor && this.formAuthor.length > 0 && 
@@ -233,10 +249,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (this.formCaptchaAnswer === '2') {
             // I should be able to put an objet as the body of the iron-ajax
             // component and it will translate it in url-encoded data.
-            this.$.commentSetter.body = JSON.stringify({'articleurl': this.articleurl, 
-              'author': this.formAuthor, 'comment': this.formComment});
+            //this.$.commentSetter.body = JSON.stringify({'articleurl': this.articleurl, 
+            //  'author': this.formAuthor, 'comment': this.formComment});
+            this.$.commentSetter.body = 'articleurl=' + encodeURI(this.articleurl) +
+              '&author=' + encodeURI(this.formAuthor) + '&comment=' + encodeURI(this.formComment);
             this.$.commentSetter.generateRequest();
           } else {
+            this.infoMessage = '';
             this.warningMessage = 'Merci de revoir les règles de priorité' +
               ' des opérateurs mathématiques.';
           }
