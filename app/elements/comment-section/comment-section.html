@@ -62,6 +62,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: bolder;
         color: var(--dark-primary-color);
       }
+      pre {
+        white-space:pre-wrap;
+      }
       
       @media (min-width: 1200px) {
         .mainCard {
@@ -80,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       url="{{apiBaseUrl}}comments">
     </iron-ajax>
     
-    <paper-material class="mainCard" elevation="4">
+    <paper-material class="mainCard" id ="comCard" elevation="4">
       <div class="content">
         <h1>Comments</h1>
         <a on-tap="showForm" id="comFormLink">Ecrire un commentaire...</a>
@@ -90,7 +93,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input label="Combien ça fait 4 x 0 + 2 ?" id="labelQuestion" value="{{formCaptchaAnswer}}">
             <iron-icon icon="help" prefix></iron-icon>
           </paper-input>
-          <!-- TODO I could add a spinner somewhere here, for the sending -->
           <template is="dom-if" if="warningMessage">
             <div class="warning">{{warningMessage}}</div>
           </template>
@@ -201,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('In showForm');
         this.$.comForm.style.display = 'block';
         this.$.comFormLink.style.display = 'none';
-        this.$.comForm.scrollIntoView();
+        this.$.comCard.scrollIntoView();
       },
       loadMoreComments: function() {
         this.synchingComments = true;
@@ -214,6 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.synchingComments = false;
         this.warningMessage = '';
         this.comments = [];
+        this._clearForm();
       },
       _handleCommentError: function() {
         console.log('No more comments.');
@@ -241,7 +244,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('Saved a comment.');
         this.warningMessage = '';
         this.infoMessage = 'Commentaire enregistré (normalement quoi).';
+        this._clearForm();
         this.loadMoreComments();
+      },
+      _clearForm: function() {
+        this.formAuthor = '';
+        this.formComment = '';
       },
       _sendComment: function() {
         if (this.formAuthor && this.formAuthor.length > 0 && 
@@ -253,6 +261,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //  'author': this.formAuthor, 'comment': this.formComment});
             this.$.commentSetter.body = 'articleurl=' + encodeURI(this.articleurl) +
               '&author=' + encodeURI(this.formAuthor) + '&comment=' + encodeURI(this.formComment);
+            this.infoMessage = 'Envoi du commentaire...';
             this.$.commentSetter.generateRequest();
           } else {
             this.infoMessage = '';
