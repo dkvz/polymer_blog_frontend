@@ -146,66 +146,67 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
         </paper-toolbar>
 
         <!-- Main Content -->
-        <div class="content" id="contentDiv">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}" on-iron-select="pageChanged">
+        <iron-scroll-threshold on-lower-threshold="loadMoreData" lower-threshold="1" id="scrollThres" scroll-target="{{scrollTarget}}">
+          <div class="content" id="contentDiv">
+            <iron-pages attr-for-selected="data-route" selected="{{route}}" on-iron-select="pageChanged">
 
-            <section data-route="home">
-            
-              <iron-ajax
-                id="articleSelector"
-                auto
-                handle-as="json"
-                on-error="handleError">
-              </iron-ajax>
+              <section data-route="home">
               
-              <template is="dom-if" if="{{notification}}">
-                <paper-material id="notif">
-                  {{notification}}
-                </paper-material>
-              </template>
-              
-              <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
-                <template>
-                  <div class="item">
-                    <article-card title="[[item.title]]" 
-                      article-id="[[item.id]]"
-                      image-src="[[item.thumbImage]]"
-                      comment-count="[[item.commentsCount]]"
-                      publication-date="[[item.date]]"
-                      articleu="[[item.articleURL]]"
-                      article-url-base="articles"
-                      content="[[item.summary]]">
-                      
-                    </article-card>
-                    <br />
-                  </div>
+                <iron-ajax
+                  id="articleSelector"
+                  auto
+                  handle-as="json"
+                  on-error="handleError">
+                </iron-ajax>
+                
+                <template is="dom-if" if="{{notification}}">
+                  <paper-material id="notif">
+                    {{notification}}
+                  </paper-material>
                 </template>
-              </iron-list>
-              <iron-scroll-threshold on-lower-trigger="loadMoreData" lower-threshold="1" id="scrollThres" scroll-target="{{scrollTarget}}">
-              </iron-scroll-threshold>
-              <template is="dom-if" if="{{syncing}}">
-                <paper-material elevation="2">
-                  <div style="text-align: center">
-                    <paper-spinner active></paper-spinner>
-                  </div>
-                </paper-material>
-              </template>
-            
-            </section>
-            
-            <section data-route="pages-content">
-              <app-page page-name="{{params.name}}"></app-page>
-            </section>
-            
-            <section data-route="articles">
-              <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}"></blog-article>
-              <br />
-              <comment-section api-base-url="{{apiBaseUrl}}" id="commentSection" articleurl="{{articleParams.name}}">
-              </comment-section>
-            </section>
+                
+                <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
+                  <template>
+                    <div class="item">
+                      <article-card title="[[item.title]]" 
+                        article-id="[[item.id]]"
+                        image-src="[[item.thumbImage]]"
+                        comment-count="[[item.commentsCount]]"
+                        publication-date="[[item.date]]"
+                        articleu="[[item.articleURL]]"
+                        article-url-base="articles"
+                        content="[[item.summary]]">
+                        
+                      </article-card>
+                      <br />
+                    </div>
+                  </template>
+                </iron-list>
+                
+                <template is="dom-if" if="{{syncing}}">
+                  <paper-material elevation="2">
+                    <div style="text-align: center">
+                      <paper-spinner active></paper-spinner>
+                    </div>
+                  </paper-material>
+                </template>
+              
+              </section>
+              
+              <section data-route="pages-content">
+                <app-page page-name="{{params.name}}"></app-page>
+              </section>
+              
+              <section data-route="articles">
+                <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}"></blog-article>
+                <br />
+                <comment-section api-base-url="{{apiBaseUrl}}" id="commentSection" articleurl="{{articleParams.name}}">
+                </comment-section>
+              </section>
 
-          </iron-pages>
-        </div>
+            </iron-pages>
+          </div>
+        </iron-scroll-threshold>
       </paper-scroll-header-panel>
     </paper-drawer-panel>
 

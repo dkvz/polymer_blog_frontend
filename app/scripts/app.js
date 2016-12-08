@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.$.articleList.push('items', e.detail.response[i]);
     }
     //app.$.articleList.fire('iron-resize');
-    app.$.scrollThres.clearLower();
+    app.$.scrollThres.clearTriggers();
     app.syncing = false;
   }
   
@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
     
     app.scrollTarget = app.$.headerPanelMain.scroller;
-    app.$.scrollThres.clearLower();
+    app.$.scrollThres.clearTriggers();
     // Load articles starting from the first one.
     console.log('Loading articles...');
     var ajax = app.$.articleSelector;
@@ -122,10 +122,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loadArticles(startFrom, false);
     } else if (app.route === 'articles') {
       app.$.commentSection.loadMoreComments();
-      app.$.scrollThres.clearLower();
+      app.$.scrollThres.clearTriggers();
     } else {
       // We still need to clearTriggers...
-      app.$.scrollThres.clearLower();
+      app.$.scrollThres.clearTriggers();
     }
     //}
     /*else {
