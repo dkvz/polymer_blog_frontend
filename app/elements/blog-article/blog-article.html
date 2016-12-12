@@ -38,31 +38,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-  <iron-ajax
-    id="articleGetter"
-    handle-as="json"
-    on-response="_handleResponse"
-    on-error="_handleError"
-    url="{{article-api-url}}/{{articleurl}}">
-  </iron-ajax>
-  <paper-material elevation="4" class="mainCard">
-    <div class="article_content" id="articleBody">
-      <template is="dom-if" if="{{syncing}}">
-        <div style="text-align: center; padding: 20px">
-          <paper-spinner active></paper-spinner>
-        </div>
-      </template>
-      <template is="dom-if" if="{{display404}}">
-        <h1 style="text-align: center">404</h1>
-        <h2 style="text-align: center">Article not found.</h2>
-      </template>
-      <template is="dom-if" if="{{articleContent}}">
-        <h1>{{title}}</h1>
-        <div><b>Par:&nbsp;</b>{{author}}&nbsp;&nbsp;<b>Posté le:&nbsp;</b>{{date}}</div>
-        <br />
-      </template>
-    </div>
-  </paper-material>
+    <iron-ajax
+      id="articleGetter"
+      handle-as="json"
+      on-response="_handleResponse"
+      on-error="_handleError"
+      url="{{article-api-url}}/{{articleurl}}">
+    </iron-ajax>
+    <paper-material elevation="4" class="mainCard">
+      <div class="article_content" id="articleBody">
+        <template is="dom-if" if="{{syncing}}">
+          <div style="text-align: center; padding: 20px">
+            <paper-spinner active></paper-spinner>
+          </div>
+        </template>
+        <template is="dom-if" if="{{display404}}">
+          <h1 style="text-align: center">404</h1>
+          <h2 style="text-align: center">Article not found.</h2>
+        </template>
+        <template is="dom-if" if="{{articleContent}}">
+          <h1>{{title}}</h1>
+          <div><b>Par:&nbsp;</b>{{author}}&nbsp;&nbsp;<b>Posté le:&nbsp;</b>{{date}}</div>
+          <br />
+        </template>
+      </div>
+    </paper-material>
   </template>
   
   <script>
@@ -107,6 +107,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           notify: true,
           value: ''
+        },
+        'scrollToBottom': {
+          type: Boolean,
+          value: false
         }
       },
       _articleChanged: function() {
@@ -140,6 +144,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         contentDiv.innerHTML = this.articleContent;
         this.$.articleBody.appendChild(contentDiv);
         this.syncing = false;
+        if (this.scrollToBottom) {
+          this.async(this._scrollBottom, 400);
+        }
+      },
+      _scrollBottom: function() {
+        var scrollTo = document.querySelector('#tombot');
+        if (scrollTo) {
+          scrollTo.scrollIntoView();
+        }
       },
       addTOC: function(contentObj, lvl, maxLvl, start, end, lvlStr) {
         var count = 1;
@@ -232,7 +245,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
         contObj.content = this.articleContent;
         this.addTOC(contObj, 1, 4, 0, contObj.content.length, 'toc');
-        this.articleContent = contObj.toc + contObj.content;
+        var bottomLink = '<a id="tombot"></a>'; 
+        this.articleContent = contObj.toc + contObj.content + bottomLink;
       }
       
     });

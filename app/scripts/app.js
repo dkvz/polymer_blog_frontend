@@ -36,6 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.notification = '';
   // Title base of the app:
   app.titleBase = 'Blog des gens compliqués';
+  // Boolean deciding if we have to immediately scroll to the bottom
+  // of an article:
+  app.scrollToBottom = false;
   
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and

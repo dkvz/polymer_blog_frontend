@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     </style>
     
-    <paper-material elevation="2" class="mainCard paperCard" on-tap="loadArticle">
+    <paper-material elevation="2" class="mainCard paperCard">
       <div class="top">
         <div class="left">
           <h1>{{title}}</h1>
@@ -97,7 +97,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-button>
         </div>
         <div class="right">
-          <paper-button raised on-tap="loadArticle">
+          <paper-button raised on-tap="loadArticleToBottom">
             <iron-icon icon="mail"></iron-icon>
             <template is="dom-if" if="{{commentCount}}"><paper-badge label="{{commentCount}}"></paper-badge></template>
             Commentaires
@@ -128,9 +128,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_contentChanged'
         }
       },
-      loadArticle: function() {
+      _loadArticle: function(toBottom) {
         console.log('In loadArticle with URL: ' + this.articleu);
-        window.location.href = this.articleUrlBase + '/' + this.articleu;
+        var href = this.articleUrlBase + '/' + this.articleu;
+        if (toBottom) {
+          href = href.concat('/toBottom');
+        }
+        window.location.href = href;
+      },
+      loadArticleToBottom: function() {
+        this._loadArticle(true);
+      },
+      loadArticle: function() {
+        this._loadArticle(false);
       },
       _contentChanged: function() {
         console.log('contentChanged fired for article card.');

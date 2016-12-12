@@ -56,8 +56,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.title = app.titleBase + ' - ' + app.params.name;
     });
     
-    page('/articles/:name', function(data) { 
+    page('/articles/:name/:toBottom?', function(data) { 
       app.route = 'articles';
+      if (data.params.toBottom) {
+        app.scrollToBottom = true;
+      } else {
+        app.scrollToBottom = false;
+      }
       app.articleParams = data.params;
       app.routeFromMenu = 'articles';
     });
