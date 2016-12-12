@@ -2,18 +2,18 @@
   "name": "polymer-starter-kit",
   "private": true,
   "dependencies": {
-    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "iron-elements": "PolymerElements/iron-elements#>1.0.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.4",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
+    "paper-elements": "PolymerElements/paper-elements#>1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
-    "polymer": "Polymer/polymer#^1.2.0",
-    "polymer-themes": "~1.0.1"
+    "polymer": "Polymer/polymer#>1.2.0",
+    "polymer-themes": "~1.0.1",
+    "iron-scroll-threshold": "^1.0.2"
   },
   "devDependencies": {},
   "ignore": [],
   "resolutions": {
-    "paper-menu": "4fecb43601",
-    "polymer": "^1.2.4"
+    "polymer": ">1.2.0"
   }
 }
