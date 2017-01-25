@@ -88,8 +88,17 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
           </a>
         </paper-menu>
         
+        <iron-ajax
+          id="tagsGetter"
+          auto
+          url="{{apiBaseUrl}}tags"
+          handle-as="json"
+          on-response="handleTagsResponse"
+          on-error="handleTagsError">
+        </iron-ajax>
         <paper-menu class="list">
-          <a><h4>Catégories</h4></a>
+          <a><iron-icon icon="label"></iron-icon><h4>Catégories</h4></a>
+          
           <a href="#">Test 1</a>
           <a href="#">Test 2</a>
           <a href="#">Test 3</a>

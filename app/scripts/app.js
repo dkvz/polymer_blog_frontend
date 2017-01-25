@@ -84,6 +84,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('No more articles to load.');
     app.syncing = false;
   };
+  
+  app.handleTagsError = function() {
+    console.log('Could not load tags for some reason.');
+  };
+  
+  app.handleTagsResponse = function() {
+    
+  };
 
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled?it won't be in the dev environment.
