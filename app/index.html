@@ -169,9 +169,9 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               
                 <iron-ajax
                   id="articleSelector"
-                  auto
                   handle-as="json"
-                  on-error="handleError">
+                  on-error="handleError"
+                  on-response="handleResponse">
                 </iron-ajax>
                 
                 <template is="dom-if" if="{{notification}}">

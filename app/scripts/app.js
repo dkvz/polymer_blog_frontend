@@ -48,16 +48,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // app.baseUrl = '/polymer-starter-kit/';
   }
   
-  function handleResponse(e) {
-    console.log('Adding more elements:' + e.detail.response.length);
-    for (var i = 0; i < e.detail.response.length; i++) {
-      app.$.articleList.push('items', e.detail.response[i]);
-    }
-    //app.$.articleList.fire('iron-resize');
-    app.$.scrollThres.clearTriggers();
-    app.syncing = false;
-  }
-  
   function loadArticles(start) {
     if (app.syncing) {
       // Still syncinc, not doing shit.
@@ -82,9 +72,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ajUrl = ajUrl.concat(encodeURIComponent(app.currentTags[i]));
       }
     }
-    console.log(ajUrl);
     ajax.url = ajUrl;
+    ajax.generateRequest();
   }
+  
+  app.handleResponse = function(e) {
+    console.log('Adding more elements:' + e.detail.response.length);
+    for (var i = 0; i < e.detail.response.length; i++) {
+      app.$.articleList.push('items', e.detail.response[i]);
+    }
+    //app.$.articleList.fire('iron-resize');
+    app.$.scrollThres.clearTriggers();
+    app.syncing = false;
+  };
   
   app.scrollToItem = function(itm) {
     console.log('Scrolling to item ' + itm + '...');
@@ -126,9 +126,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.push('currentTags', e.srcElement.innerText);
       // Fire article loading, we need to load from 0 here.
       // We also need to reset a whole bunch of arrays.
-      app.$.articleList.splice('items', 0, app.$.articleList.items.length);
-      loadArticles(0);
+      app.refreshArticles();
     }
+  };
+  
+  app.refreshArticles = function() {
+    app.$.articleList.splice('items', 0, app.$.articleList.items.length);
+    // This array is actually not used but whatevs
+    app.articles = [];
+    app.syncing = false;
+    loadArticles(0);
   };
 
   // Listen for template bound event to know when bindings
@@ -140,10 +147,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.scrollTarget = app.$.headerPanelMain.scroller;
     app.$.scrollThres.clearTriggers();
     // Load articles starting from the first one.
-    console.log('Loading articles...');
-    var ajax = app.$.articleSelector;
-    ajax.addEventListener('response', handleResponse);
-    loadArticles(0);
+    //console.log('Loading articles...');
+    //var ajax = app.$.articleSelector;
+    //ajax.addEventListener('response', handleResponse);
+    //loadArticles(0);
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
