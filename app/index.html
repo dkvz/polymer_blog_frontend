@@ -99,7 +99,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
         <paper-menu class="list" id="tagsMenu">
           <a><iron-icon icon="label"></iron-icon><h4>Catégories</h4></a>
           <template is="dom-repeat" items="{{tags}}">
-            <a on-tap="changeTag" href="{{baseUrl}}tag/{{item.nameEncoded}}">{{item.name}}</a>
+            <a href="{{baseUrl}}tag/{{item.nameEncoded}}">{{item.name}}</a>
           </template>
         </paper-menu>
       </paper-scroll-header-panel>

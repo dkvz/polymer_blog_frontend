@@ -61,9 +61,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.title = app.titleBase + ' - ' + app.params.name;
     });
     
-    page('/tag/:name', function() {
+    page('/tag/:name', function(data) {
       app.route = 'home';
       document.title = app.titleBase;
+      app.currentTags = [];
+      app.currentTags.push(data.params.name);
+      app.refreshArticles();
     });
     
     page('/articles/:name/:toBottom?', function(data) { 
