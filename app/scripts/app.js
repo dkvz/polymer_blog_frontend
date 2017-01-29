@@ -121,6 +121,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
   
   app.changeTag = function(e) {
+    // This method is actually never used as for now. Changing tags is
+    // Handled through routing.html.
     console.log('Changing tag to ' + e.srcElement.innerText);
     if (e.srcElement.innerText !== '') {
       // Currently we reset all tags.
