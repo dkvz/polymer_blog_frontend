@@ -80,7 +80,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="top">
         <div class="left">
           <h1>{{title}}</h1>
-          <div class="date">Publié le: {{publicationDate}}</div>
+          <div>
+            Tags 
+            <template is="dom-repeat" items="{{tags}}">
+              |&nbsp;{{item.name}}
+            </template>
+          </div>
+          <div class="date">
+            Publié le: {{publicationDate}} par <b>{{author}}</b>
+          </div>
         </div>
         <template is="dom-if" if="{{imageSrc}}">
           <img src="{{imageSrc}}" class="right topImg" />

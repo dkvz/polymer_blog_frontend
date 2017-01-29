@@ -106,7 +106,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.handleTagsResponse = function(e) {
     if (e.detail.response) {
       for (var i = 0; i < e.detail.response.length; i++) {
-        this.push('tags', e.detail.response[i]);
+        var t = e.detail.response[i];
+        t.nameEncoded = encodeURIComponent(t.name);
+        this.push('tags', t);
       }
     }
   };
@@ -130,11 +132,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
   
+  app.resetTagMenu = function() {
+    this.currentTags = [];
+    app.$.tagsMenu.select(null);
+  };
+  
   app.refreshArticles = function() {
     app.$.articleList.splice('items', 0, app.$.articleList.items.length);
     // This array is actually not used but whatevs
     app.articles = [];
-    app.syncing = false;
     loadArticles(0);
   };
 

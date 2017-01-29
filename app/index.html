@@ -96,10 +96,10 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
           on-response="handleTagsResponse"
           on-error="handleTagsError">
         </iron-ajax>
-        <paper-menu class="list">
+        <paper-menu class="list" id="tagsMenu">
           <a><iron-icon icon="label"></iron-icon><h4>Catégories</h4></a>
           <template is="dom-repeat" items="{{tags}}">
-            <a on-tap="changeTag">{{item.name}}</a>
+            <a on-tap="changeTag" href="{{baseUrl}}tag/{{item.nameEncoded}}">{{item.name}}</a>
           </template>
         </paper-menu>
       </paper-scroll-header-panel>
@@ -190,7 +190,9 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                         publication-date="[[item.date]]"
                         articleu="[[item.articleURL]]"
                         article-url-base="articles"
-                        content="[[item.summary]]">
+                        content="[[item.summary]]"
+                        tags="[[item.tags]]"
+                        author="[[item.author]]">
                         
                       </article-card>
                       <br />
