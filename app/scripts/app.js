@@ -27,10 +27,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.articleApiUrl = app.apiBaseUrl + 'article';
   // The array holding all the articles:
   app.articles = [];
+  // The array holding all the tags:
+  app.tags = [];
+  // Array holding current tags being used as filters:
+  app.currentTags = [];
   // Boolean that tells if articles are currently loading:
   app.syncing = false;
-  // hack I used to prevent firing iron-scroll-threshold:
-  app.firstLoad = true;
   // Text notification to show on top of the index page. Leave blank
   // for no notification (may be modified in a method later):
   app.notification = '';
@@ -69,7 +71,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if (start > 0) {
       maxArt = app.maxArticlesScroll;
     }
-    ajax.url = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + maxArt;
+    var ajUrl = app.apiBaseUrl + 'articles-starting-from/' + start + '?max=' + maxArt;
+    if (app.currentTags.length > 0) {
+      // URL encode the tags and add them to the URL using comma as separator.
+      ajUrl = ajUrl.concat('&tags=');
+      for (var i = 0; i < app.currentTags.length; i++) {
+        if (i > 0) {
+          ajUrl = ajUrl.concat(',');
+        }
+        ajUrl = ajUrl.concat(encodeURIComponent(app.currentTags[i]));
+      }
+    }
+    console.log(ajUrl);
+    ajax.url = ajUrl;
   }
   
   app.scrollToItem = function(itm) {
@@ -89,14 +103,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Could not load tags for some reason.');
   };
   
-  app.handleTagsResponse = function() {
-    
+  app.handleTagsResponse = function(e) {
+    if (e.detail.response) {
+      for (var i = 0; i < e.detail.response.length; i++) {
+        this.push('tags', e.detail.response[i]);
+      }
+    }
   };
 
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled?it won't be in the dev environment.
     if (!Polymer.dom(document).querySelector('platinum-sw-cache').disabled) {
       Polymer.dom(document).querySelector('#caching-complete').show();
+    }
+  };
+  
+  app.changeTag = function(e) {
+    console.log('Changing tag to ' + e.srcElement.innerText);
+    if (e.srcElement.innerText !== '') {
+      // Currently we reset all tags.
+      app.currentTags = [];
+      this.push('currentTags', e.srcElement.innerText);
+      // Fire article loading, we need to load from 0 here.
+      // We also need to reset a whole bunch of arrays.
+      app.$.articleList.splice('items', 0, app.$.articleList.items.length);
+      loadArticles(0);
     }
   };
 
@@ -126,7 +157,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Correction: after an iron-threshold update it no longer shoots at load...
     // This demands a pretty big revision.
     console.log('Firing loadMoreData...');
-    //if (!app.firstLoad) {
     if (app.route === 'home') {
       var startFrom = app.$.articleList.items.length;
       console.log('Loading more data starting from ' + startFrom + '...');
@@ -138,12 +168,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // We still need to clearTriggers...
       app.$.scrollThres.clearTriggers();
     }
-    //}
-    /*else {
-      app.firstLoad = false;
-      app.$.scrollThres.scrollTarget = app.$.headerPanelMain.scroller;
-      app.$.scrollThres.clearLower();
-    }*/
   };
   
   app.pageChanged = function() {

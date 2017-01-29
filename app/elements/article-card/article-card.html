@@ -144,6 +144,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _contentChanged: function() {
         console.log('contentChanged fired for article card.');
+        // We need to remove the previous contentDiv, if there was one.
+        if (this.$.cardBody.firstChild) {
+          this.$.cardBody.removeChild(this.$.cardBody.firstChild);
+        }
         var contentDiv = document.createElement('div');
         contentDiv.innerHTML = this.content;
         this.$.cardBody.appendChild(contentDiv);

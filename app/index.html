@@ -98,10 +98,9 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
         </iron-ajax>
         <paper-menu class="list">
           <a><iron-icon icon="label"></iron-icon><h4>Catégories</h4></a>
-          
-          <a href="#">Test 1</a>
-          <a href="#">Test 2</a>
-          <a href="#">Test 3</a>
+          <template is="dom-repeat" items="{{tags}}">
+            <a on-tap="changeTag">{{item.name}}</a>
+          </template>
         </paper-menu>
       </paper-scroll-header-panel>
 
