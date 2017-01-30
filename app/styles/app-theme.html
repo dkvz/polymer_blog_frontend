@@ -58,9 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --paper-scroll-header-panel-full-header: {
       background-color: var(--dark-primary-color);
       background-image: url("../images/gillesplusmini.png");
-      /*background-size: contain !important;*/
     };
-    /* background for toolbar when it is condensed */
     --paper-scroll-header-panel-condensed-header: {
       background-color: var(--primary-text-color);
       background-image: none;
@@ -164,11 +162,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     transform-origin: left center;
   }
 
-  /* Height of the scroll area */
-  .content {
-    /*height: 900px;*/
-  }
-
   #toast .toast-hide-button {
     color: #eeff41;
     margin: 10px;
@@ -197,6 +190,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     #drawer .paper-toolbar {
       margin-left: 16px;
+    }
+    
+    #contentDiv {
+      padding-top: 0px;
     }
 
   }
@@ -228,15 +225,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: none;
     }
     
+    #contentDiv {
+      padding-top: 4px;
+    }
+    
   }
   
-  @media (min-width: 1601px) and (max-width: 1920px) {
+  @media (min-width: 1601px) and (max-width: 2600px) {
     
     paper-material {
       width: var(--paper-material-large-width);
       margin-bottom: 32px;
       padding-left: 30px;
       padding-right: 30px;
+    }
+    
+    #contentDiv {
+      padding-top: 10px;
     }
     
   }
