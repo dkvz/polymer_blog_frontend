@@ -18,7 +18,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
+  <meta name="theme-color" content="#184160">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -215,7 +215,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
               </section>
               
               <section data-route="articles">
-                <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}" scroll-to-Bottom="{{scrollToBottom}}"></blog-article>
+                <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}" scroll-to-Bottom="{{scrollToBottom}}" base-url="{{baseUrl}}"></blog-article>
                 <br />
                 <comment-section api-base-url="{{apiBaseUrl}}" id="commentSection" articleurl="{{articleParams.name}}">
                 </comment-section>

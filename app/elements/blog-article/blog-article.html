@@ -59,6 +59,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-if" if="{{articleContent}}">
           <h1>{{title}}</h1>
           <div><b>Par:&nbsp;</b>{{author}}&nbsp;&nbsp;<b>Posté le:&nbsp;</b>{{date}}</div>
+          <div>
+            <b>Tags:&nbsp;</b>
+            <template is="dom-repeat" items="{{tags}}">
+              |&nbsp;<a href="{{baseUrl}}tag/{{item.nameEncoded}}">{{item.name}}</a>
+            </template>
+          </div>
           <br />
         </template>
       </div>
@@ -77,6 +83,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           notify: true,
           observer: '_articleChanged'
+        },
+        'baseUrl': {
+          type: String,
+          notify: true
         },
         'display404': {
           type: Boolean,
@@ -98,6 +108,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'date': {
           type: String,
           notify: true
+        },
+        'tags': {
+          type: Array,
+          notify: true,
+          value: []
         },
         'syncing': {
           type: Boolean,
@@ -139,6 +154,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.author = e.detail.response.author;
         this.date = e.detail.response.date;
         this.articleContent = e.detail.response.content;
+        if (e.detail.response.tags) {
+          for (var i = 0; i < e.detail.response.tags.length; i++) {
+            var t = e.detail.response.tags[i];
+            t.nameEncoded = encodeURIComponent(t.name);
+            this.push('tags', t);
+          }
+        }
         this._processArticle();
         var contentDiv = document.createElement('div');
         contentDiv.innerHTML = this.articleContent;
