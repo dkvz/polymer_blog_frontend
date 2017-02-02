@@ -41,6 +41,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Boolean deciding if we have to immediately scroll to the bottom
   // of an article:
   app.scrollToBottom = false;
+  // Random qutoes:
+  app.quotes = [
+    'Vas-y répète le mot trompette dans ta tête',
+    'Les SITES INTERNET doivent avoir un sous-titre',
+    'Si Gargamel mange tous les schtroumpfs y a plus d\'histoire',
+    'Ta mère est tellement grosse qu\'elle dépasse du bouclier de Reinhardt',
+    'Si le teflon est antiadhérant, comment ils l\'ont collé sur la poêle?',
+    'Kesse tu fais ici va prendre un bain',
+    'La monogamie aurait provoqué la disparition de l\'os pénien',
+    'Ces comme meme pas mal qu\'on sois allée sur la lune',
+    'Péter un plomb et peindre tout en brun',
+    'Nous paissons, vous paissez, ils paissent'
+  ];
   
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
@@ -75,6 +88,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ajax.url = ajUrl;
     ajax.generateRequest();
   }
+  
+  app.randomQuote = function() {
+    return app.quotes[Math.floor(Math.random() * app.quotes.length)];
+  };
   
   app.handleResponse = function(e) {
     console.log('Adding more elements:' + e.detail.response.length);
