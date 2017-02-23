@@ -8,10 +8,11 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
 
 <head>
   <meta charset="utf-8">
-  
+
   <base href="/">
-  
+
   <meta name="description" content="">
+  <meta name="google-site-verification" content="qoNRDcwtbhz5eSiyhCaBQr35quSpAXzGitwvl9L0uzI" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
   <title>Blog des gens compliqués - Expérimental</title>
@@ -51,7 +52,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
-  
+
   <script src="https://platform.twitter.com/widgets.js"></script>
 
   <!-- For shared styles, shared-styles.html import in elements.html -->
@@ -87,7 +88,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             <span>Me contacter</span>
           </a>
         </paper-menu>
-        
+
         <iron-ajax
           id="tagsGetter"
           auto
@@ -141,7 +142,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
           <div class="bottom bottom-container horizontal layout">
             <div class="bottom-title paper-font-subhead" id="subtit">[[randomQuote()]]</div>
           </div>
-          
+
           <div class="bottom bottom-container horizontal end-justified flex layout">
             <!-- Moving my narrow only menu (was here before -->
             <div id="topNav">
@@ -166,24 +167,24 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
             <iron-pages attr-for-selected="data-route" selected="{{route}}" on-iron-select="pageChanged">
 
               <section data-route="home">
-              
+
                 <iron-ajax
                   id="articleSelector"
                   handle-as="json"
                   on-error="handleError"
                   on-response="handleResponse">
                 </iron-ajax>
-                
+
                 <template is="dom-if" if="{{notification}}">
                   <paper-material id="notif">
                     {{notification}}
                   </paper-material>
                 </template>
-                
+
                 <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
                   <template>
                     <div class="item">
-                      <article-card title="[[item.title]]" 
+                      <article-card title="[[item.title]]"
                         article-id="[[item.id]]"
                         image-src="[[item.thumbImage]]"
                         comment-count="[[item.commentsCount]]"
@@ -193,13 +194,13 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                         content="[[item.summary]]"
                         tags="[[item.tags]]"
                         author="[[item.author]]">
-                        
+
                       </article-card>
                       <br />
                     </div>
                   </template>
                 </iron-list>
-                
+
                 <template is="dom-if" if="{{syncing}}">
                   <paper-material elevation="2">
                     <div style="text-align: center">
@@ -207,15 +208,15 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                     </div>
                   </paper-material>
                 </template>
-              
+
               </section>
-              
+
               <section data-route="pages-content">
                 <app-page page-name="{{params.name}}"></app-page>
               </section>
-              
+
               <section data-route="articles">
-                <blog-article articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}" scroll-to-Bottom="{{scrollToBottom}}" base-url="{{baseUrl}}"></blog-article>
+                <blog-article id="blogArticle" articleurl="{{articleParams.name}}" article-api-url="{{articleApiUrl}}" title-base="{{titleBase}}" scroll-to-Bottom="{{scrollToBottom}}" base-url="{{baseUrl}}"></blog-article>
                 <br />
                 <comment-section api-base-url="{{apiBaseUrl}}" id="commentSection" articleurl="{{articleParams.name}}">
                 </comment-section>

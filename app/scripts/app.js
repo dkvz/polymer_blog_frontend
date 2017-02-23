@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
-  
+
   // Max number of articles to load:
   app.maxArticles = '6';
   // The max to use while scrolling for more articles:
@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Sets app default base URL
   app.baseUrl = '/';
   // Set API URL:
-  app.apiBaseUrl = 'http://dorade-api.servebeer.com/';
+  app.apiBaseUrl = 'http://api.dkvz.eu/';
   //app.apiBaseUrl = 'http://localhost:9000/';
   app.articleApiUrl = app.apiBaseUrl + 'article';
   // The array holding all the articles:
@@ -52,15 +52,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'La monogamie aurait provoqué la disparition de l\'os pénien',
     'Ces comme meme pas mal qu\'on sois allée sur la lune',
     'Péter un plomb et peindre tout en brun',
-    'Nous paissons, vous paissez, ils paissent'
+    'Nous paissons, vous paissez, ils paissent',
+    'Qui a commandé un décacapou?'
   ];
-  
+
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
     // set app.baseURL to '/your-pathname/' if running from folder in production
     // app.baseUrl = '/polymer-starter-kit/';
   }
-  
+
   function loadArticles(start) {
     if (app.syncing) {
       // Still syncinc, not doing shit.
@@ -88,11 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ajax.url = ajUrl;
     ajax.generateRequest();
   }
-  
+
   app.randomQuote = function() {
     return app.quotes[Math.floor(Math.random() * app.quotes.length)];
   };
-  
+
   app.handleResponse = function(e) {
     console.log('Adding more elements:' + e.detail.response.length);
     for (var i = 0; i < e.detail.response.length; i++) {
@@ -102,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.$.scrollThres.clearTriggers();
     app.syncing = false;
   };
-  
+
   app.scrollToItem = function(itm) {
     console.log('Scrolling to item ' + itm + '...');
     var scrollTo = document.querySelector('#' + itm);
@@ -110,16 +111,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       scrollTo.scrollIntoView();
     }
   };
-  
+
   app.handleError = function() {
     console.log('No more articles to load.');
     app.syncing = false;
   };
-  
+
   app.handleTagsError = function() {
     console.log('Could not load tags for some reason.');
   };
-  
+
   app.handleTagsResponse = function(e) {
     if (e.detail.response) {
       for (var i = 0; i < e.detail.response.length; i++) {
@@ -136,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.dom(document).querySelector('#caching-complete').show();
     }
   };
-  
+
   app.changeTag = function(e) {
     // This method is actually never used as for now. Changing tags is
     // Handled through routing.html.
@@ -150,39 +151,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.refreshArticles();
     }
   };
-  
+
   app.resetTagMenu = function() {
     this.currentTags = [];
     app.$.tagsMenu.select(null);
   };
-  
+
   app.refreshArticles = function() {
     app.$.articleList.splice('items', 0, app.$.articleList.items.length);
     // This array is actually not used but whatevs
     app.articles = [];
     loadArticles(0);
+    // Reset the iframes from the article:
+    this.$.blogArticle.clearIframes();
   };
 
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    //console.log('Our app is ready to rock!');
+    // Fires when the app is ready.
     //app.$.articleList.scrollTarget = app.$.headerPanelMain.scroller;
-    
     app.scrollTarget = app.$.headerPanelMain.scroller;
     app.$.scrollThres.clearTriggers();
-    // Load articles starting from the first one.
-    //console.log('Loading articles...');
-    //var ajax = app.$.articleSelector;
-    //ajax.addEventListener('response', handleResponse);
-    //loadArticles(0);
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
   });
-  
+
   app.loadMoreData = function() {
     // We can start selecting depending on how many items are in the list:
     // The event seems to shoot on page load?
@@ -201,7 +198,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.$.scrollThres.clearTriggers();
     }
   };
-  
+
   app.pageChanged = function() {
     if (app.route === 'pages-content') {
       console.log('Opening a custom page');
