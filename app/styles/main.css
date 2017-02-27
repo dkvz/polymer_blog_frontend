@@ -18,6 +18,5 @@ body {
   background-image: url('../images/patgpibgray.jpg');
   background-repeat: repeat;
   background-position: top left;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
-
