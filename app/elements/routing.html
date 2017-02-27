@@ -52,15 +52,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.resetTagMenu();
       app.refreshArticles();
     });
-    
-    page('/pages/:name', function(data) { 
+
+    page('/pages/:name', function(data) {
       app.route = 'pages-content';
       app.params = data.params;
       app.resetTagMenu();
       app.routeFromMenu = 'pages-' + app.params.name;
       document.title = app.titleBase + ' - ' + app.params.name;
     });
-    
+
     page('/tag/:name', function(data) {
       app.route = 'home';
       document.title = app.titleBase;
@@ -68,8 +68,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.currentTags.push(data.params.name);
       app.refreshArticles();
     });
-    
-    page('/articles/:name/:toBottom?', function(data) { 
+
+    page('/articles/:name/:toBottom?', function(data) {
       app.route = 'articles';
       if (data.params.toBottom) {
         app.scrollToBottom = true;
@@ -83,11 +83,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/contact', function() {
       app.route = 'contact';
       app.routeFromMenu = 'contact';
+      page.redirect('/pages/contact');
     });
 
     // 404
     page('*', function() {
-      app.$.toast.text = 'Page introuvable: ' + window.location.href  + 
+      app.$.toast.text = 'Page introuvable: ' + window.location.href  +
         '. Vous avez été redirigé vers la page d\'accueil.';
       app.$.toast.show();
       page.redirect(app.baseUrl);
