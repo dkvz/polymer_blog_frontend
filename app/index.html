@@ -165,6 +165,7 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                   </paper-material>
                 </template>
 
+
                 <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
                   <template>
                     <div class="item">
@@ -180,10 +181,10 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                         author="[[item.author]]">
 
                       </article-card>
-                      <br />
                     </div>
                   </template>
                 </iron-list>
+
 
                 <template is="dom-if" if="{{syncing}}">
                   <paper-material elevation="2">

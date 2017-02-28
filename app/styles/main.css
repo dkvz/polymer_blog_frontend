@@ -15,6 +15,8 @@ body {
   font-weight: normal;
   color: #353535;
   margin: 0px;
+  /**overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;**/
   background-image: url('../images/patgpibgray.jpg');
   background-repeat: repeat;
   background-position: top left;

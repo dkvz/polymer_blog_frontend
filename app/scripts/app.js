@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'Vas-y répète le mot trompette dans ta tête',
     'Les SITES INTERNET doivent avoir un sous-titre',
     'Si Gargamel mange tous les schtroumpfs y a plus d\'histoire',
-    'Ta mère est tellement grosse qu\'elle dépasse du bouclier de Reinhardt',
+    'Optimisation de la conversion Kasteel Bier en lignes de code',
     'Si le teflon est antiadhérant, comment ils l\'ont collé sur la poêle?',
     'Kesse tu fais ici va prendre un bain',
     'La monogamie aurait provoqué la disparition de l\'os pénien',
