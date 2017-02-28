@@ -97,9 +97,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.handleResponse = function(e) {
     console.log('Adding more elements:' + e.detail.response.length);
     for (var i = 0; i < e.detail.response.length; i++) {
-      app.$.articleList.push('items', e.detail.response[i]);
+      this.push('articles', e.detail.response[i]);
     }
-    //app.$.articleList.fire('iron-resize');
     app.$.scrollThres.clearTriggers();
     app.syncing = false;
   };
@@ -158,9 +157,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.refreshArticles = function() {
-    app.$.articleList.splice('items', 0, app.$.articleList.items.length);
+    this.splice('articles', 0, app.articles.length);
     // This array is actually not used but whatevs
-    app.articles = [];
+    //app.articles = [];
     loadArticles(0);
     // Reset the iframes from the article:
     this.$.blogArticle.clearIframes();
@@ -187,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // This demands a pretty big revision.
     console.log('Firing loadMoreData...');
     if (app.route === 'home') {
-      var startFrom = app.$.articleList.items.length;
+      var startFrom = app.articles.length;
       console.log('Loading more data starting from ' + startFrom + '...');
       loadArticles(startFrom, false);
     } else if (app.route === 'articles') {

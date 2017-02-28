@@ -165,26 +165,22 @@ I think this code is supposed to be BSD licenced. I'm too dumb to understand thi
                   </paper-material>
                 </template>
 
+                <template is="dom-repeat" items="{{articles}}">
+                  <div class="item">
+                    <article-card title="[[item.title]]"
+                      article-id="[[item.id]]"
+                      image-src="[[item.thumbImage]]"
+                      comment-count="[[item.commentsCount]]"
+                      publication-date="[[item.date]]"
+                      articleu="[[item.articleURL]]"
+                      article-url-base="articles"
+                      content="[[item.summary]]"
+                      tags="[[item.tags]]"
+                      author="[[item.author]]">
 
-                <iron-list items="[]" as="item" scroll-target="contentDiv" id="articleList" class="flex">
-                  <template>
-                    <div class="item">
-                      <article-card title="[[item.title]]"
-                        article-id="[[item.id]]"
-                        image-src="[[item.thumbImage]]"
-                        comment-count="[[item.commentsCount]]"
-                        publication-date="[[item.date]]"
-                        articleu="[[item.articleURL]]"
-                        article-url-base="articles"
-                        content="[[item.summary]]"
-                        tags="[[item.tags]]"
-                        author="[[item.author]]">
-
-                      </article-card>
-                    </div>
-                  </template>
-                </iron-list>
-
+                    </article-card>
+                  </div>
+                </template>
 
                 <template is="dom-if" if="{{syncing}}">
                   <paper-material elevation="2">
