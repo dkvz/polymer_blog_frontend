@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'Les SITES INTERNET doivent avoir un sous-titre',
     'Si Gargamel mange tous les schtroumpfs y a plus d\'histoire',
     'Optimisation de la conversion Kasteel Bier en lignes de code',
-    'Si le teflon est antiadhérant, comment ils l\'ont collé sur la poêle?',
+    'Le Teflon n\'accroche pas mais il est collé sur la poêle?',
     'Kesse tu fais ici va prendre un bain',
     'La monogamie aurait provoqué la disparition de l\'os pénien',
     'Ces comme meme pas mal qu\'on sois allée sur la lune',
