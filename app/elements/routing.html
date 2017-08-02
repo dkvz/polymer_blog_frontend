@@ -58,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.params = data.params;
       app.resetTagMenu();
       app.routeFromMenu = 'pages-' + app.params.name;
-      document.title = app.titleBase + ' - ' + app.params.name;
+      document.title = app.params.name + ' | ' + app.titleBase;
     });
 
     page('/tag/:name', function(data) {

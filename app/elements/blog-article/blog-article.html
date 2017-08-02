@@ -150,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.articleBody.removeChild(item);
         }
         this.title = e.detail.response.title;
-        document.title = this.titleBase + ' - ' + this.title;
+        document.title = this.title + ' | ' + this.titleBase;
         this.author = e.detail.response.author;
         this.date = e.detail.response.date;
         this.articleContent = e.detail.response.content;
