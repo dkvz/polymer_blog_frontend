@@ -10,8 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../../styles/shared-styles.html">
-
 
 <dom-module id="app-page">
   <template>
@@ -24,13 +24,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-right: auto;
         margin-left: auto;
       }
-      
+
       @media all and (min-width: 601px) and (max-width: 1600px) {
         .paperCard {
           width: var(--paper-material-medium-width, 95%);
         }
       }
-      
+
       @media all and (min-width: 1601px) {
         .paperCard {
           width: var(--paper-material-large-width, 80%);
@@ -38,8 +38,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
+    <style is="custom-style" include="shared-styles"></style>
     <paper-material elevation="2" id="main" class="paperCard">
-      
+
     </paper-material>
   </template>
   <script>
@@ -56,18 +57,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_pageNameChanged'
         }
       },
-      
+
       _pageNameChanged: function() {
         // TODO For security reasons, remove all dots and shit from the URL
-        
+
         // TODO Show loading spinner or something
-        
+
         // Empty the node:
         var mn = this.$.main;
         while (mn.firstChild) {
           mn.removeChild(mn.firstChild);
         }
-        
+
         this.importHref(this.resolveUrl('pages/page-' + this.pageName + '.html'), function(e) {
           // e.target.import is the import document.
           //var newElement = document.createElement('custom-page');
@@ -81,10 +82,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // I don't know if it's allowed (lint was complaining though).
           this._loadErrorPage();
         });
-        
+
         // TODO Hide loading spinner.
       },
-      
+
       _loadErrorPage: function() {
         this.importHref(this.resolveUrl('pages/error.html'), function(e) {
           console.log(e.target.import.querySelector('template'));
@@ -94,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('Error page not present.');
         });
       }
-      
+
     });
   })();
   </script>
